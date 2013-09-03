@@ -1,0 +1,17 @@
+Clase de LaTeX para generar artículos de una forma sencilla que puede incluir el logo y un encabezado de la UDP. 
+
+Un ejemplo de uso es
+
+\documentclass{udparticle}
+
+\usepackage{graphicx}
+% La imagen "udp-logo" debe existir en el folder
+\logo{\includegraphics[width=\linewidth]{udp-logo}}
+% Define el encabezado en páginas siguientes y debajo del logo
+\headertext{Coordinación de Práctica y Titulación}
+
+\begin{document}
+% Esto imprime el título y el logo
+\maketitle
+\end{document}
+
