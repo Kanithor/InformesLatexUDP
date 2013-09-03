@@ -93,3 +93,8 @@
   \par\endgroup            % instead of \end{center}
   \vskip 1.5em             % <--- modify this to adjust the separation
 }
+
+% Set the spanish system (ironically, the comments are in english, but.. who cares)
+\RequirePackage[spanish]{babel}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{csquotes}
