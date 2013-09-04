@@ -4,9 +4,16 @@ Un ejemplo de uso es
 
 \documentclass{udparticle}
 
-\usepackage{graphicx}
-% La imagen "udp-logo" debe existir en el folder
-\logo{\includegraphics[width=\linewidth]{udp-logo}}
+%% Para incluir el logo puede usar una de las siguientes opciones:
+%\usepackage{graphicx} % recuerde incluir este paquete para las imágenes
+%% La imagen "udp-logo" debe existir en el folder
+%\logo{\includegraphics[width=\linewidth]{udp-logo}}
+%% De igual forma puede utilizar los logos embebidos en la plantilla
+%\setlogoEITFI
+%\setlogoEIT
+
+\setlogoEITFI
+
 % Define el encabezado en páginas siguientes y debajo del logo
 \headertext{Coordinación de Práctica y Titulación}
 
