@@ -17,6 +17,10 @@ Un ejemplo de uso es
 % Define el encabezado en páginas siguientes y debajo del logo
 \headertext{Coordinación de Práctica y Titulación}
 
+% Define el título y el autor
+\title{Título}
+\author{Alguién}
+
 \begin{document}
 % Esto imprime el título y el logo
 \maketitle
