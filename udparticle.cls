@@ -74,12 +74,13 @@
 }%ifnotmtarg
 }%end \@myheader
 
+% Contains all the udp logos and other stuff
 \RequirePackage{udp}
 
 % Setters for the logos
 \newcommand\@setlogotikz[1]{ \logo{ \resizebox{\@logosz}{!}{#1} } }
-\def\setlogoEITFI{ \@setlogotikz{\@logoEITFI} }
-\def\setlogoEIT{ \@setlogotikz{\@logoEIT} }
+\def\setlogoEITFI{ \@setlogotikz{\logoEITFI} }
+\def\setlogoEIT{ \@setlogotikz{\logoEIT} }
 
 
 % Re-define the title
