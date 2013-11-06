@@ -1,6 +1,13 @@
-Clase de LaTeX para generar artículos personalizados de una forma sencilla que puede incluir el logo y un encabezado de la UDP. 
+Clases de LaTeX para generar artículos y programas de curso personalizados de una forma sencilla que puede incluir el logo y un encabezado de la UDP. 
 
-Un ejemplo de uso es
+Instalación
+-----------
+
+Los archivos de las distintas clases y estilos deben de desplegarse en un directorio que semeje su instalación de LaTeX. Por ejemplo, puede instalarlos en un directorio ~/texmf/tex/latex/udp, donde el directorio "udp" puede tener el nombre que le parezca. Note que de no existir dicha estructura debe crearla.
+
+udparticle.cls
+--------------
+Esta clase es utilizada para generar artículos que incluyan el logo y formato de la UDP.
 
 \documentclass{udparticle}
 
@@ -25,4 +32,111 @@ Un ejemplo de uso es
 % Esto imprime el título y el logo
 \maketitle
 \end{document}
+
+udpsyllabus.cls
+---------------
+Esta clase permite crear programas para cursos de la UDP.
+
+% Para compilar: pdflatex - biber - pdflatex
+\documentclass{udpsyllabus}
+
+% bibliografia embebida en el mismo archivo
+\usepackage{filecontents}% permite definir archivos dentro del mismo archivo
+\begin{filecontents}{programa.bib}
+@BOOK{Foo,
+  author = {F. Foo},
+  title = {Foo Book},
+  publisher = {Foo Publisher},
+  year = {2013},
+  keywords={obligatorio}% aca definimos el tipo de referencia a incluir en el documento
+}
+
+@BOOK{Bar,
+  author = {Bar, B.},
+  title = {Bar Book},
+  publisher = {Bar Publisher},
+  year = {2013},
+  edition = {2},
+  keywords={complementario}
+}
+\end{filecontents}
+
+% Incluimos el archivo de la bibliografía
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{programa.bib}
+
+%% Parametros del título
+% Definimos el nombre del curso
+\classname{Nombre del curso}
+% Valores predefinidos del título que pueden re-definirse usando los siguientes comandos
+% \subtitle{\large PROGRAMA DE ASIGNATURA}
+% \author{%
+%   Facultad de Ingeniería\\
+%   Escuela de Informática y Telecomunicaciones
+% }
+% \date{}
+
+\begin{document}
+% Generamos el encabezado del programa
+\maketitle
+
+\section{Identificación}
+% Código del curso
+\code{CIT-XXXX}
+% Número de créditos del curso
+\credits{X}
+% Duración del curso
+\duration{Semestral}
+% Semestre en el que se imparte
+\semester{Electivo}
+% Pre-requisitos del curso
+\requirements{CBM-1001, CBM-1002, CBE-2000}
+% Sesiones
+\sessions{2 cátedras, 1 ayudantía}
+% Creamos la información del curso
+\makeclassid
+
+\section{Objetivos generales y específicos}
+
+% Definición de los objetivos
+
+\section{Descripción de contenidos}
+
+% Contenidos
+
+% Podemos utilizar un formato para generar los contenidos por items
+\begin{enumerate}
+\content{Tema 1}{Descripción.}
+\content{Tema 2}{Descripción.}
+\end{enumerate}
+
+\section{Importancia del curso en el plan de estudios}
+
+% Descripción de la importancia
+
+\section{Metodología}
+
+% Metodología
+
+\section{Evaluación}
+
+% Descripción de la evaluación 
+
+% Tabular las ponderaciones
+\begin{tabular}{lll}
+\textbullet\quad Solemnes & 30\% & (15\% cada uno) \\
+\textbullet\quad Examen & 30\% &\\
+\textbullet\quad Tareas, ejercicios y asistencia & 10\% &\\
+\textbullet\quad Proyectos & 30\% &(15\% cada uno) \\
+\end{tabular}
+
+% Esta sección es opcional y puede utilizar las referencias antes descritas
+\section{Bibliografía básica de referencia}
+\nocite{*}% Incluimos todas las referencias, o bien podemos citar las pertinentes
+% Incluimos la bibliografía obligatoria
+\printbibliography[keyword=obligatorio,title={Bibliografía obligatoria},heading=subbibliography]
+% Incluimos la bibliografía complementaria
+\printbibliography[keyword=complementario,title={Bibliografía complementaria},heading=subbibliography]
+\end{document}
+
 
