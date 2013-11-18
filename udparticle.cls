@@ -50,20 +50,15 @@
 
 \let\ps@plain\ps@firstpage% add this because maketitle triggers a \thispagestyle{plain}
 
-% Definitions and commands
+%% Definitions and commands
+
+% Contains all the udp logos and other stuff
+\RequirePackage{udp}
+
 % Set header text for following pages
 \def\@headertext{}
 \newcommand{\setheadertext}[1]{\def\@headertext{#1}}
 \let\headertext\setheadertext
-
-% Set logo for first page
-\def\@logo{}
-\newcommand{\setlogo}[1]{\def\@logo{#1}}
-\let\logo\setlogo
-% Set logo size
-\def\@logosz{4.5cm}
-\newcommand{\setlogosz}[1]{\def\@logosz{#1}}
-\let\logosz\setlogosz
 
 \def\@myheader{%
 \ifdefempty{\@logo}{}{%ifnotempty
@@ -73,15 +68,6 @@
 \end{minipage}%
 }%ifnotmtarg
 }%end \@myheader
-
-% Contains all the udp logos and other stuff
-\RequirePackage{udp}
-
-% Setters for the logos
-\newcommand\@setlogotikz[1]{ \logo{ \resizebox{\@logosz}{!}{#1} } }
-\def\setlogoEITFI{ \@setlogotikz{\logoEITFI} }
-\def\setlogoEIT{ \@setlogotikz{\logoEIT} }
-
 
 % Re-define the title
 \def\@maketitle{%
