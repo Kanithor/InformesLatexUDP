@@ -1,0 +1,107 @@
+% udpexam.cls
+% Exam for the UDP courses
+% 2013.11.18 Adin Ramirez adin.ramirez (at) mail.udp.cl
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesClass{udpexam} [2013/11/18 v0.01 Exam for the UDP]
+
+
+% --- Class structure: declaration of options part
+% ---
+% This class extends the udparticle class
+% Read all the documentclass options; pass them to article,
+% unless the file "<currentoption>.udp" exists, then it is loaded
+\DeclareOption*{\InputIfFileExists{\CurrentOption.udp}{}{
+%
+\PassOptionsToClass{\CurrentOption}{udpexam}}}
+% --- Class structure: execution of options part
+% ---
+\ProcessOptions \relax
+% --- Class structure: declaration of options part
+% ---
+\LoadClass{exam}
+
+% UDP logos and other internal stuff
+\RequirePackage{udp}
+
+% Set the spanish system (ironically, the comments are in english, but.. who cares)
+\RequirePackage[spanish,es-lcroman]{babel}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{csquotes}
+
+% Holders for info
+% course codes
+\def\@coursecode{}
+\newcommand{\coursecode}[1]{\def\@coursecode{#1}}
+% professors/instructors
+\def\@instructors{}
+\newcommand{\instructors}[1]{\def\@instructors{#1}}
+% name of the course
+\def\@title{}
+\renewcommand{\title}[1]{\def\@title{#1}}
+
+% % Style
+\pagestyle{headandfoot}
+\header{\@logo}{\vfil\@title\vfil}{\vfil\@coursecode\vfil}
+\footer{Profesor(es): \@instructors}{}{\thepage}
+
+% Name and section commands
+\RequirePackage{xparse}
+\newcommand{\name}[1][\textwidth]{\hbox to #1{Nombre:\enspace\hrulefill}\vspace{0.2 in}}
+% Uses two optional arguments to define the size of name and section
+\DeclareDocumentCommand{\nameSection}{O{0.7\textwidth} O{0.29\textwidth}}{\hbox{\hbox to #1{Nombre:\enspace\hrulefill} \hbox to #2{Sección:\enspace\hrulefill}}\vspace{0.2 in}}
+
+% redefinition of the keywords
+\pointpoints{punto}{puntos}
+\renewcommand{\solutiontitle}{\noindent\textbf{Solución:}\enspace}
+
+\RequirePackage{listings}
+\RequirePackage{bold-extra}%enabled ttfamily bold fonts 
+
+\lstset{
+basicstyle=\ttfamily,
+inputencoding=utf8,
+extendedchars=true,
+frameround=tttt,
+basicstyle=\small\ttfamily,
+keywordstyle=\bfseries,
+showstringspaces=false,
+frame=single,
+breaklines=true,
+postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+literate=%
+    {á}{{\'{a}}}1
+    {é}{{\'{e}}}1
+    {í}{{\'{i}}}1
+    {ó}{{\'{o}}}1
+    {ú}{{\'{u}}}1
+    {ñ}{{\~{n}}}1
+    {Ñ}{{\~{N}}}1
+}
+
+\renewenvironment{solution}[1][0pt]%
+  {%
+    \ifprintanswers
+      \begingroup
+      \Solution@Emphasis
+      \begin{TheSolution}%
+      \lstset{ %
+        frame=none
+      }
+    \else
+      \ifcancelspace
+        % Do nothing
+      \else
+        \par
+        \penalty 0
+        \vspace*{#1}%
+      \fi
+      \setbox\z@\vbox\bgroup
+    \fi
+  }{%
+    \ifprintanswers
+      \end{TheSolution}%
+      \endgroup
+    \else
+      \egroup
+    \fi
+  }%
