@@ -33,7 +33,7 @@
 \newcommand{\sessions}[1]{\def\@sessions{#1}}
 
 % class id
-\newcommand{\makeclassid}{%
+\newcommand{\makecourseid}{%
   \begin{tabular}{ll}
   Código: & \@code\\
   Créditos: & \@credits\\
