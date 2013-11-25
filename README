@@ -16,10 +16,10 @@ Esta clase es utilizada para generar artículos que incluyan el logo y formato d
 %% La imagen "udp-logo" debe existir en el folder
 %\logo{\includegraphics[width=\linewidth]{udp-logo}}
 %% De igual forma puede utilizar los logos embebidos en la plantilla
-%\setlogoEITFI
-%\setlogoEIT
+%\setlogo{EITFI}
+%\setlogo{EIT}
 
-\setlogoEITFI
+\setlogo{EITFI}
 
 % Define el encabezado en páginas siguientes y debajo del logo
 \headertext{Coordinación de Práctica y Titulación}
@@ -94,7 +94,7 @@ Esta clase permite crear programas para cursos de la UDP.
 % Sesiones
 \sessions{2 cátedras, 1 ayudantía}
 % Creamos la información del curso
-\makeclassid
+\makecourseid
 
 \section{Objetivos generales y específicos}
 
