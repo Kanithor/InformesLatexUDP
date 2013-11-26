@@ -59,7 +59,7 @@
 }
 \date{}
 
-\setlogoEITFI
+\setlogo{EITFI}
 
 \code{}
 \credits{}
