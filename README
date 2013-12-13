@@ -139,4 +139,51 @@ Esta clase permite crear programas para cursos de la UDP.
 \printbibliography[keyword=complementario,title={Bibliografía complementaria},heading=subbibliography]
 \end{document}
 
+udpexam.cls
+-----------
+Esta clase permite crear examenes y solemnes usando el formato de la UDP. Extiende las mismas funcionalidades de exam.cls (http://ctan.org/tex-archive/macros/latex/contrib/exam/)
+
+\documentclass{udpexam}
+% Descomentar para generar pauta (imprime las respuestas)
+%\printanswers
+
+%\setlogo{EIT}
+\setlogo{FI}
+
+\coursecode{CIT-1000}
+\instructors{Prof. Mengano}
+\title{Solemne de Curso}
+
+% Establezco donde quiero los punteos
+%\pointsinmargin
+\pointsinrightmargin
+
+\begin{document}
+\nameSection
+
+\begin{questions}
+
+\question[50]
+Demuestre $P = NP$.
+
+\begin{parts}
+\part[35]
+Por inducción.
+\part[35]
+Por prueba directa.
+
+\begin{solution}
+La solución es obvia (por lo tanto se deja como ejercicio).
+\end{solution}
+
+\question[50]
+Resolver ecuaciones polinómicas en tiempo polinomial en el caso estándar.
+
+\begin{solution}
+La solución es obvia (por lo tanto se deja como ejercicio).
+\end{solution}
+
+\end{questions}
+
+\end{document}
 
