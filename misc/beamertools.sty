@@ -1,0 +1,26 @@
+\RequirePackage{calc}
+\RequirePackage{xkeyval}
+\newlength{\@length}
+
+% Define the keys for the doublecolumnframe (dcl)
+% Remember: \define@cmdkey[prefix]{family}[mp]{key}   [default]{function}
+\define@cmdkey[udp]{dcf}{title}{}%    title of the frame
+\define@cmdkey[udp]{dcf}{wp}{}% width percentage
+
+\presetkeys[udp]{dcf}{title=,wp=0.5}{}
+
+\newcommand{\doublecolumnframe}[3][]{%
+\setkeys[udp]{dcf}{#1}
+\begin{frame}{\cmdudp@dcf@title}%
+  \begin{columns}
+    \begin{column}{\cmdudp@dcf@wp\linewidth}%
+    #2%
+    \end{column}%
+    \hfill%
+    \setlength{\@length}{\linewidth-\cmdudp@dcf@wp\linewidth}%
+    \begin{column}{\@length}%
+    #3%
+    \end{column}%
+  \end{columns}%
+\end{frame}%
+}

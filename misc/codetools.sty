@@ -1,0 +1,51 @@
+% Useful definitions for coding
+
+\def\fileversion{1.0}
+\def\filedate{2014/03/07}
+
+\typeout{Package: `codetools' \fileversion\space <\filedate>}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{codetools}[\filedate\space\fileversion]
+
+\RequirePackage{listings}
+\RequirePackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codemauve}{rgb}{0.58,0,0.82}
+\definecolor{codered}{rgb}{0.6,0,0} % for strings
+
+\lstset{
+  basicstyle=\ttfamily,
+  showstringspaces=false,          % do not emphasize spaces in strings
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{codegreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{codered},     % string literal style
+  % additional letters
+  literate=%
+    {á}{{\'{a}}}1
+    {é}{{\'{e}}}1
+    {í}{{\'{i}}}1
+    {ó}{{\'{o}}}1
+    {ú}{{\'{u}}}1
+    {ñ}{{\~{n}}}1
+    {Ñ}{{\~{N}}}1
+}
+% bold in monospaced font
+\DeclareFontShape{OT1}{cmtt}{bx}{n}{<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+%% Define languages
+%\lstdefinelanguage
+%   [x64]{Assembler}     % add a "x64" dialect of Assembler
+%   [x86masm]{Assembler} % based on the "x86masm" dialect
+%   % with these extra keywords:
+%   {morekeywords={CDQE,CQO,CMPSQ,CMPXCHG16B,JRCXZ,LODSQ,MOVSXD, %
+%                  POPFQ,PUSHFQ,SCASQ,STOSQ,IRETQ,RDTSCP,SWAPGS, %
+%                  rax,rdx,rcx,rbx,rsi,rdi,rsp,rbp, %
+%                  r8,r8d,r8w,r8b,r9,r9d,r9w,r9b}
+%    } % etc.
