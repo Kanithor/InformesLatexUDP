@@ -1,0 +1,35 @@
+\mode<presentation>
+
+% Requirement
+\RequirePackage{tikz}
+% my package with several short hands
+\RequirePackage{beamertools}
+
+% make it compress to show the navigation bars
+\beamer@compresstrue
+
+% Settings
+\useinnertheme{udp}
+\useoutertheme{udp}
+\usecolortheme{udp}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true]  
+
+% define the class name
+\RequirePackage{etoolbox}
+\def\@coursecode{}
+\def\@coursename{}
+\newcommand{\course}[2][]{\ifstrempty{#1}{\def\@coursecode{#2}}{\def\@coursecode{#1}}\def\@coursename{#2}}
+\newcommand{\insertcoursecode}{\@coursecode}
+\newcommand{\insertcoursename}{\@coursename}
+
+%fix the title page navigation bar
+\let\oldtitlepage\titlepage
+\renewcommand{\titlepage}{%
+  \addtocounter{framenumber}{-1}%ensure that title page has 0 number
+  \oldtitlepage%
+}
+
+
+\mode<all>

@@ -1,0 +1,54 @@
+\mode<presentation>
+
+%headline with navigation bar
+\setbeamertemplate{headline}
+{%
+\leavevmode
+\ifnum\insertframenumber>0\relax%remove it for the title page
+\begin{beamercolorbox}[wd=\the\paperwidth,ht=0.6cm]{section in head/foot}
+  \begin{tikzpicture}
+    \useasboundingbox[fill=white](0,0) rectangle(\the\paperwidth,0.6);
+    \fill[secondColor] (0,0) rectangle(0.3,0.6);
+    \fill[firstColor] (0.35,0) rectangle(\the\paperwidth,0.6);
+    \node[anchor= west, white] at (0.3,0.3){\insertnavigation{0.85\paperwidth}};%
+  \end{tikzpicture}
+\end{beamercolorbox}
+\fi
+}
+
+% Frame title
+\defbeamertemplate*{frametitle}{udp}[1][]
+{%
+\vskip-1pt%skip after the begginning of the slide
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.2cm]{frametitle} 
+  \begin{tikzpicture}
+  \useasboundingbox[fill=white](0,0) rectangle(\the\paperwidth,0.6);
+  \fill[secondColor] (0,0) rectangle(0.3,1);
+  \fill[firstColor] (0.35,0) rectangle(\the\paperwidth,0.6);
+%   \ifx\insertframesubtitle\@empty%
+      {\node[anchor=west, white,font=\large] at (0.4,0.25){\insertframetitle};}
+%      \else%
+%      {\node[anchor= west, white,font=\large] at (0.4,0.81){\insertframetitle};%
+%       \node[anchor= west, white,font=\small] at (0.4,0.41){\insertframesubtitle};}%
+%      \fi
+  \end{tikzpicture}
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}
+{%
+  \vskip-5pt
+  \leavevmode%
+  \ifnum\insertframenumber>0\relax%remove it for the title page
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{author in head/foot}%
+    \hspace*{2ex}\insertcoursecode
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+%    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+    \insertframenumber{}\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \fi%
+}
+
+\mode<all>
