@@ -20,7 +20,9 @@
 \setbeamercolor*{date}{fg=white}
 
 % Items
-\setbeamercolor*{item}{fg=secondColor}
+\setbeamercolor{structure}{fg=secondColor}
+\setbeamercolor*{item}{parent=structure}
+\setbeamercolor*{itemize item}{parent=item}
 \setbeamercolor*{itemize subitem}{fg=secondColor!80!white}
 \setbeamercolor*{itemize subsubitem}{fg=secondColor!60!white}
 
