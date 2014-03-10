@@ -34,7 +34,7 @@
 
 % class id
 \newcommand{\makecourseid}{%
-  \begin{tabular}{ll}
+  \begin{tabular}{p{0.3\textwidth}@{}p{0.65\textwidth}}
   Código: & \@code\\
   Créditos: & \@credits\\
   Duración: & \@duration\\
