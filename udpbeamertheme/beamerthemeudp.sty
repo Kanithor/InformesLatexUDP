@@ -31,5 +31,11 @@
   \oldtitlepage%
 }
 
+% Patches beamer so that "subsections numbered 0" show their slide entries.
+% Solution: http://tex.stackexchange.com/questions/2072/beamer-navigation-circles-without-subsections
+\RequirePackage{etoolbox}
+\makeatletter
+\patchcmd{\slideentry}{\ifnum#2>0}{\ifnum2>0}{}{\@error{unable to patch}}% replace the subsection number test with a test that always returns true
+\makeatother
 
 \mode<all>
