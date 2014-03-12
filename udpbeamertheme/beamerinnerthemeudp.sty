@@ -1,4 +1,18 @@
+\ProvidesPackageRCS $Header: beamerinnerthemeudp.sty,v 1.0 2014/03/07 adin$
+
+
+\DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
+\ExecuteOptionsBeamer{shadow=false}
+\ProcessOptionsBeamer
+
 \mode<presentation>
+
+% Items
+\setbeamertemplate{blocks}[rounded][shadow=\beamer@themerounded@shadow]
+\setbeamertemplate{items}[square]
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{itemize subsubitem}[circle]
+\setbeamertemplate{sections/subsections in toc}[square]
 
 \setbeamertemplate{background}{
   \begin{tikzpicture}
@@ -28,6 +42,11 @@
     \begin{beamercolorbox}[wd=\the\paperwidth,sep=8pt,#1]{title page header}
       \centering
       \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%   
     \end{beamercolorbox}%
   \end{minipage}
 %  }
@@ -48,14 +67,11 @@
 %  }
 %  \vfill
 }
+%lets set it
+\setbeamertemplate{title page}[udp][colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
 
+\setbeamertemplate{part page}[default][colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
 
-% Items
-\setbeamertemplate{items}[square]
-\setbeamertemplate{itemize subitem}[triangle]
-\setbeamertemplate{itemize subsubitem}[circle]
-
-\setbeamertemplate{sections/subsections in toc}[square]
 
 \mode
 <all>

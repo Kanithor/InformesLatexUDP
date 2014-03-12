@@ -9,9 +9,11 @@
 \beamer@compresstrue
 
 % Settings
-\useinnertheme{udp}
-\useoutertheme{udp}
 \usecolortheme{udp}
+\useoutertheme[subsection=false]{udp}
+\useinnertheme{udp}
+
+
 
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{blocks}[rounded][shadow=true]  
@@ -33,10 +35,8 @@
 
 % Patches beamer so that "subsections numbered 0" show their slide entries.
 % Solution: http://tex.stackexchange.com/questions/2072/beamer-navigation-circles-without-subsections
-\RequirePackage{etoolbox}
-\makeatletter
-\patchcmd{\slideentry}{\ifnum#2>0}{\ifnum2>0}{}{\@error{unable to patch}}% replace the subsection number test with a test that always returns true
-\makeatother
+%TODO check how to make the patch work with the title page
+%\patchcmd{\slideentry}{\ifnum#2>0}{\ifnum2>0}{}{\@error{unable to patch}}% replace the subsection number test with a test that always returns true
 
 % Fonts profesionales (nice math mode)
 \usefonttheme{professionalfonts}

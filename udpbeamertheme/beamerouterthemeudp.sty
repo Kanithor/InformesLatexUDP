@@ -1,7 +1,34 @@
+% UDP Outher style based on Smoothbars (http://mirrors.ctan.org/macros/latex/contrib/beamer/base/themes/outer/beamerouterthemesmoothbars.sty)
+\ProvidesPackageRCS $Header: beamerouterthemeudp.sty,v 1.0 2014/03/07 adin$
+
+
+\newif\ifbeamer@sb@subsection
+
+\DeclareOptionBeamer{subsection}[true]{\csname beamer@sb@subsection#1\endcsname}
+\ExecuteOptionsBeamer{subsection=true}
+\ProcessOptionsBeamer
+
 \mode<presentation>
 
-%headline with navigation bar
-\setbeamertemplate{headline}
+\setbeamercolor{frametitle}{parent=palette primary}
+\setbeamercolor{subsection in head/foot}{parent=palette secondary}
+\setbeamercolor{section in head/foot}{parent=palette quaternary}
+
+
+\beamer@compresstrue
+
+\AtBeginDocument{
+  {
+    \usebeamerfont*{headline}
+    \colorlet{global.bg}{bg}
+    \usebeamercolor{subsection in head/foot}
+    \usebeamercolor{section in head/foot}
+    \usebeamercolor{frametitle}
+  }
+}
+
+% New Head
+\defbeamertemplate*{headline}{udp}
 {%
 \leavevmode
 \ifnum\insertframenumber>0\relax%remove it for the title page
@@ -14,10 +41,10 @@
   \end{tikzpicture}
 \end{beamercolorbox}
 \fi
-}
+}%
 
-% Frame title
-\defbeamertemplate*{frametitle}{udp}[1][]
+
+\defbeamertemplate*{frametitle}{udp}
 {%
 \vskip-1pt%skip after the begginning of the slide
   \begin{beamercolorbox}[wd=\paperwidth,ht=1.2cm]{frametitle} 
@@ -50,5 +77,6 @@
   \end{beamercolorbox}}%
   \fi%
 }
-
-\mode<all>
+  
+\mode
+<all>
