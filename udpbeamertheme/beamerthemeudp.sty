@@ -35,8 +35,7 @@
 
 % Patches beamer so that "subsections numbered 0" show their slide entries.
 % Solution: http://tex.stackexchange.com/questions/2072/beamer-navigation-circles-without-subsections
-%TODO check how to make the patch work with the title page
-%\patchcmd{\slideentry}{\ifnum#2>0}{\ifnum2>0}{}{\@error{unable to patch}}% replace the subsection number test with a test that always returns true
+\patchcmd{\slideentry}{\ifnum#2>0}{\ifnum#1>0}{}{\@error{unable to patch}}%  require section number to be strictly positive
 
 % Fonts profesionales (nice math mode)
 \usefonttheme{professionalfonts}
