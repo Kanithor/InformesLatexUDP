@@ -39,13 +39,11 @@
 % bold in monospaced font
 \DeclareFontShape{OT1}{cmtt}{bx}{n}{<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
 
-%% Define languages
-%\lstdefinelanguage
-%   [x64]{Assembler}     % add a "x64" dialect of Assembler
-%   [x86masm]{Assembler} % based on the "x86masm" dialect
-%   % with these extra keywords:
-%   {morekeywords={CDQE,CQO,CMPSQ,CMPXCHG16B,JRCXZ,LODSQ,MOVSXD, %
-%                  POPFQ,PUSHFQ,SCASQ,STOSQ,IRETQ,RDTSCP,SWAPGS, %
-%                  rax,rdx,rcx,rbx,rsi,rdi,rsp,rbp, %
-%                  r8,r8d,r8w,r8b,r9,r9d,r9w,r9b}
-%    } % etc.
+% ++ (plus plus) sign for diferent languages
+% create a more "suitable" plus plus sign
+\RequirePackage{relsize}
+\RequirePackage{xspace}
+\DeclareRobustCommand{\plusplus}{\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}\xspace}
+\pdfstringdefDisableCommands{%
+  \def\plusplus{++}%
+}
