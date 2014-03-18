@@ -24,3 +24,39 @@
   \end{columns}%
 \end{frame}%
 }
+
+
+% Define the keys for the varblock (vb)
+% Remember: \define@cmdkey[prefix]{family}[mp]{key}   [default]{function}
+\define@cmdkey[udp]{vb}{titlebg}{}% color for title bg
+\define@cmdkey[udp]{vb}{titlefg}{}% color for title fg
+\define@cmdkey[udp]{vb}{bodybg}{}% color for body bg
+\define@cmdkey[udp]{vb}{bodyfg}{}% color for body fg
+\define@cmdkey[udp]{vb}{width}{}% block width
+\presetkeys[udp]{vb}{titlebg=structure.fg!75!black,titlefg=white,bodybg=block title.bg!10!bg,bodyfg=black,width=\textwidth}{}
+
+% Variable block
+\newenvironment<>{varblock}[2][]{%
+\setkeys[udp]{vb}{#1}
+  \begingroup
+  \setbeamercolor{block title}{bg=\cmdudp@vb@titlebg,fg=\cmdudp@vb@titlefg}%bg=background, fg= foreground
+  \setbeamercolor{block body}{bg=\cmdudp@vb@bodybg,fg=\cmdudp@vb@bodyfg}%bg=background, fg= foreground
+  \begin{minipage}{\cmdudp@vb@width}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{#2}%
+    \par%
+  \usebeamertemplate{block begin}
+}{%
+  \par%
+  \usebeamertemplate{block end}%
+  \end{actionenv}
+  \end{minipage}
+  \endgroup
+}
+
+% Example varblock
+\newenvironment<>{examplevarblock}[2][]{
+\begin{varblock}[titlefg=block title example.fg,titlebg=block title example.bg,bodybg=white,#1]{#2}
+}{
+\end{varblock}
+}
