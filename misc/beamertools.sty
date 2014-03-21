@@ -25,6 +25,34 @@
 \end{frame}%
 }
 
+% Define the keys for the floatitemframe (fif)
+% Remember: \define@cmdkey[prefix]{family}[mp]{key}   [default]{function}
+\define@cmdkey[udp]{fif}{title}{}%    title of the frame
+\define@cmdkey[udp]{fif}{wp}{}% width percentage
+
+\presetkeys[udp]{fif}{title=,wp=0.5}{}
+
+\newcommand{\floatitemframe}[5][]{%
+\setkeys[udp]{fif}{#1}
+\begin{frame}{\cmdudp@fif@title}%
+  \begin{itemize}
+    #2%
+  \begin{columns}
+    \begin{column}{\leftmargini}
+    \end{column}
+    \begin{column}{\cmdudp@fif@wp\linewidth}%
+    #3%
+    \end{column}%
+    \setlength{\@length}{\linewidth-\cmdudp@fif@wp\linewidth}%
+    \begin{column}{\@length}%
+    #4%
+    \end{column}%
+  \end{columns}%
+  #5
+  \end{itemize}
+\end{frame}%
+}
+
 
 % Define the keys for the varblock (vb)
 % Remember: \define@cmdkey[prefix]{family}[mp]{key}   [default]{function}
