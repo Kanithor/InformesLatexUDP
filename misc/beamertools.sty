@@ -6,12 +6,13 @@
 % Remember: \define@cmdkey[prefix]{family}[mp]{key}   [default]{function}
 \define@cmdkey[udp]{dcf}{title}{}%    title of the frame
 \define@cmdkey[udp]{dcf}{wp}{}% width percentage
+\define@cmdkey[udp]{dcf}{options}{}% options to the frame
 
-\presetkeys[udp]{dcf}{title=,wp=0.5}{}
+\presetkeys[udp]{dcf}{title=,wp=0.5,options=}{}
 
 \newcommand{\doublecolumnframe}[3][]{%
 \setkeys[udp]{dcf}{#1}
-\begin{frame}{\cmdudp@dcf@title}%
+\begin{frame}[\cmdudp@dcf@options]{\cmdudp@dcf@title}%
   \begin{columns}
     \begin{column}{\cmdudp@dcf@wp\linewidth}%
     #2%
@@ -29,12 +30,13 @@
 % Remember: \define@cmdkey[prefix]{family}[mp]{key}   [default]{function}
 \define@cmdkey[udp]{fif}{title}{}%    title of the frame
 \define@cmdkey[udp]{fif}{wp}{}% width percentage
+\define@cmdkey[udp]{fif}{options}{}% options to the frame
 
-\presetkeys[udp]{fif}{title=,wp=0.5}{}
+\presetkeys[udp]{fif}{title=,options=,wp=0.5}{}
 
 \newcommand{\floatitemframe}[5][]{%
 \setkeys[udp]{fif}{#1}
-\begin{frame}{\cmdudp@fif@title}%
+\begin{frame}[\cmdudp@fif@options]{\cmdudp@fif@title}%
   \begin{itemize}
     #2%
   \begin{columns}
