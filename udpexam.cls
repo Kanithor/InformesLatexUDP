@@ -48,7 +48,30 @@
 \RequirePackage{xparse}
 \newcommand{\name}[1][\textwidth]{\hbox to #1{Nombre:\enspace\hrulefill}\vspace{0.2 in}}
 % Uses two optional arguments to define the size of name and section
-\DeclareDocumentCommand{\nameSection}{O{0.7\textwidth} O{0.29\textwidth}}{\hbox{\hbox to #1{Nombre:\enspace\hrulefill} \hbox to #2{Sección:\enspace\hrulefill}}\vspace{0.2 in}}
+\DeclareDocumentCommand{\makename}{O{0.7\textwidth} O{0.29\textwidth}}{\hbox{\hbox to #1{Nombre:\enspace\hrulefill} \hbox to #2{Sección:\enspace\hrulefill}}\vspace{0.2 in}}
+
+% Re-define the title
+\def\maketitle{%
+  \header{\@logo}{}{}
+  \footer{}{}{\thepage}
+  \newpage
+%  \vspace*{-\topskip}      % remove the initial space
+  \begingroup\centering    % instead of \begin{center}
+  \let \footnote \thanks
+  \hrule height \z@        % to avoid the insertion of lineskip glue
+    {\LARGE \@title \par}%
+    \vskip 1.5em 
+    {\large
+      \lineskip .5em 
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+%    \vskip 1em 
+%    {\large \@date}%
+  \par\endgroup            % instead of \end{center}
+  \vskip 1.5em             % <--- modify this to adjust the separation
+}
+
 
 % redefinition of the keywords
 \pointpoints{punto}{puntos}
