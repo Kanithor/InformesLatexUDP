@@ -45,14 +45,3 @@
 \pdfstringdefDisableCommands{%
   \def\plusplus{++}%
 }
-
-% patch lstinputlistings to use a defined path
-% see: http://tex.stackexchange.com/questions/167640/is-there-a-an-equivalent-to-graphicspath-for-listings-otherwise-how-do-i-defi/167647#167647
-\newcommand\lstinputpath[1]{\gdef\@listingpath{#1}}  % macro for declaring the path
-                                                     % (very similar to the \title macro)
-
-\let\oldlstinputlisting\lstinputlisting    % save \lstinputlisting for its redefinition
-\renewcommand\lstinputlisting[2][]         % redefinition of \lstinputlisting
-{%
-  \oldlstinputlisting[#1]{\@listingpath#2}%
-}
