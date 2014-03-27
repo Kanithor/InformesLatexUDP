@@ -1,6 +1,6 @@
 % udpexam.cls
 % Exam for the UDP courses
-% 2013.11.18 Adin Ramirez adin.ramirez (at) mail.udp.cl
+% Adin Ramirez adin.ramirez (at) mail.udp.cl
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{udpexam} [2013/11/18 v0.01 Exam for the UDP]
 
@@ -25,6 +25,7 @@
 
 % Set the spanish system (ironically, the comments are in english, but.. who cares)
 \RequirePackage[spanish,es-lcroman]{babel}
+\decimalpoint% changes the coma in the numbers to period
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{csquotes}
 
