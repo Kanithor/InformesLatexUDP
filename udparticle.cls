@@ -1,6 +1,6 @@
 % udparticle.cls
 % Article for the UDP documents
-% 2013.09.27 Adin Ramirez adin.ramirez (at) mail.udp.cl
+% Adin Ramirez adin.ramirez (at) mail.udp.cl
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{udparticle} [2013/09/27 v0.01 Article of the UDP]
 
@@ -90,6 +90,7 @@
 }
 
 % Set the spanish system (ironically, the comments are in english, but.. who cares)
-\RequirePackage[spanish,es-lcroman]{babel}
+\RequirePackage[spanish,es-lcroman,es-tabla]{babel}
+\decimalpoint% changes the coma in the numbers to period
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{csquotes}
