@@ -24,7 +24,7 @@
 \RequirePackage{udp}
 
 % Set the spanish system (ironically, the comments are in english, but.. who cares)
-\RequirePackage[spanish,es-lcroman]{babel}
+\RequirePackage[spanish,es-lcroman,es-tabla]{babel}
 \decimalpoint% changes the coma in the numbers to period
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{csquotes}
