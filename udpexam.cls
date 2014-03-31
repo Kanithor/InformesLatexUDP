@@ -53,7 +53,8 @@
 % Re-define the title
 \def\maketitle{%
   \header{\@logo}{}{}
-  \footer{}{}{\thepage}
+  \ifdefempty{\@instructors}{%
+  \footer{}{}{\thepage}}{}
   \newpage
 %  \vspace*{-\topskip}      % remove the initial space
   \begingroup\centering    % instead of \begin{center}
