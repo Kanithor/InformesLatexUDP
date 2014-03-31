@@ -1,6 +1,6 @@
 % udpsyllabus.cls
 % Syllabus for the UDP courses
-% 2013.10.30 Adin Ramirez adin.ramirez (at) mail.udp.cl
+% Adin Ramirez adin.ramirez (at) mail.udp.cl
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{udpsyllabus} [2013/10/30 v0.01 Syllabus of the UDP]
 
