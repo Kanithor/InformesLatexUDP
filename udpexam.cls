@@ -43,7 +43,7 @@
 % % Style
 \pagestyle{headandfoot}
 \header{\@logo}{\vfil\@title\vfil}{\vfil\@coursecode\vfil}
-\footer{Profesor(es): \@instructors}{}{\thepage}
+\footer{\ifdefempty{\@instructors}{}{Profesor(es): \@instructors}}{}{\thepage}
 
 % Name and section commands
 \RequirePackage{xparse}
@@ -54,8 +54,6 @@
 % Re-define the title
 \def\maketitle{%
   \header{\@logo}{}{}
-  \ifdefempty{\@instructors}{%
-  \footer{}{}{\thepage}}{}
   \newpage
 %  \vspace*{-\topskip}      % remove the initial space
   \begingroup\centering    % instead of \begin{center}
