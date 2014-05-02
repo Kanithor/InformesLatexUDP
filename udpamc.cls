@@ -35,9 +35,12 @@
 \ProcessOptions\relax
 
 \LoadClass{article}
-\RequirePackage[box,lang=EN]{automultiplechoice}
+\RequirePackage[box,lang=ES]{automultiplechoice}
 
+% for patching
 \RequirePackage{etoolbox}
+
+% for logos
 \RequirePackage{udp}
 \setlogo{EITFI}
 
@@ -47,6 +50,8 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{csquotes}
 
+% for using square and blacksquare in instructions
+\RequirePackage{amssymb}
 
 % My variables for holding information
 \def\@instructions{}
