@@ -61,7 +61,8 @@
 \define@cmdkey[udp]{vb}{bodybg}{}% color for body bg
 \define@cmdkey[udp]{vb}{bodyfg}{}% color for body fg
 \define@cmdkey[udp]{vb}{width}{}% block width
-\presetkeys[udp]{vb}{titlebg=structure.fg!75!black,titlefg=white,bodybg=block title.bg!10!bg,bodyfg=black,width=\textwidth}{}
+\define@cmdkey[udp]{vb}{align}{}% block width
+\presetkeys[udp]{vb}{titlebg=structure.fg!75!black,titlefg=white,bodybg=block title.bg!10!bg,bodyfg=black,width=\textwidth,align=t}{}
 
 % Variable block
 \newenvironment<>{varblock}[2][]{%
@@ -69,7 +70,7 @@
   \begingroup
   \setbeamercolor{block title}{bg=\cmdudp@vb@titlebg,fg=\cmdudp@vb@titlefg}%bg=background, fg= foreground
   \setbeamercolor{block body}{bg=\cmdudp@vb@bodybg,fg=\cmdudp@vb@bodyfg}%bg=background, fg= foreground
-  \begin{minipage}{\cmdudp@vb@width}
+  \begin{minipage}[\cmdudp@vb@align]{\cmdudp@vb@width}
   \begin{actionenv}#3%
     \def\insertblocktitle{#2}%
     \par%
