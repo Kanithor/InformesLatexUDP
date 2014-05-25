@@ -41,7 +41,7 @@
 % create a more "suitable" plus plus sign
 \RequirePackage{relsize}
 \RequirePackage{xspace}
-\DeclareRobustCommand{\plusplus}{\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}\xspace}
+\DeclareRobustCommand{\plusplus}{\nolinebreak[4]\hspace{-.05em}\raisebox{.3ex}{\relsize{-3}{\textbf{++}}}\xspace}
 \pdfstringdefDisableCommands{%
   \def\plusplus{++}%
 }
@@ -50,3 +50,4 @@
 \RequirePackage{xspace}
 \DeclareRobustCommand{\clang}{\texttt{C}\xspace}
 \DeclareRobustCommand{\cpplang}{\texttt{C\plusplus}\xspace}
+\DeclareRobustCommand{\cppxlang}[1]{\texttt{C\nolinebreak[4]\hspace{-.05em}\raisebox{.3ex}{\relsize{-3}{\textbf{++}}}#1}\xspace}
