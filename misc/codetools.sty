@@ -14,6 +14,21 @@
 \definecolor{codemauve}{rgb}{0.58,0,0.82}
 \definecolor{codered}{rgb}{0.6,0,0} % for strings
 
+% Patch the numbers to use literals
+% http://tex.stackexchange.com/a/110195/7561
+\lst@Key{numbers}{none}{%
+    \let\lst@PlaceNumber\@empty
+    \lstKV@SwitchCases{#1}%
+    {none&\\%
+     left&\def\lst@PlaceNumber{\llap{\normalfont
+                \lst@numberstyle{\thelstnumber}\kern\lst@numbersep}}\\%
+     leftliteral&\def\lst@PlaceNumber{\llap{\normalfont
+                \lst@numberstyle{\the\lst@lineno}\kern\lst@numbersep}}\\%
+     right&\def\lst@PlaceNumber{\rlap{\normalfont
+                \kern\linewidth \kern\lst@numbersep
+                \lst@numberstyle{\thelstnumber}}}%
+    }{\PackageError{Listings}{Numbers #1 unknown}\@ehc}}
+
 \lstset{
   basicstyle=\footnotesize\ttfamily,
   showstringspaces=false,          % do not emphasize spaces in strings
