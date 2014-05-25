@@ -1,5 +1,4 @@
 % Useful definitions for coding
-
 \def\fileversion{1.0}
 \def\filedate{2014/03/07}
 
@@ -20,9 +19,9 @@
   showstringspaces=false,          % do not emphasize spaces in strings
   breaklines=true,                 % automatic line breaking only at whitespace
   captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{codegreen},    % comment style
-  escapeinside={@*}{*@},          % if you want to add LaTeX within your code
-  keywordstyle=\bf\color{blue},       % keyword style
+  commentstyle=\color{codegreen},  % comment style
+  escapeinside={@*}{*@},           % if you want to add LaTeX within your code
+  keywordstyle=\bf\color{blue},    % keyword style
   stringstyle=\color{codered},     % string literal style
   % additional letters
   literate=%
@@ -34,11 +33,13 @@
     {ñ}{{\~{n}}}1
     {Ñ}{{\~{N}}}1
 }
+\renewcommand{\lstlistingname}{Algoritmo}% Listing -> Algoritmo
 % bold in monospaced font
 \DeclareFontShape{OT1}{cmtt}{bx}{n}{<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
 
 % ++ (plus plus) sign for diferent languages
 % create a more "suitable" plus plus sign
+\RequirePackage{hyperref}
 \RequirePackage{relsize}
 \RequirePackage{xspace}
 \DeclareRobustCommand{\plusplus}{\nolinebreak[4]\hspace{-.05em}\raisebox{.3ex}{\relsize{-3}{\textbf{++}}}\xspace}

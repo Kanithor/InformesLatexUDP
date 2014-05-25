@@ -2,8 +2,6 @@
 
 % Requirement
 \RequirePackage{tikz}
-% my package with several short hands
-\RequirePackage{beamertools}
 
 % make it compress to show the navigation bars
 \beamer@compresstrue
@@ -13,7 +11,9 @@
 \useoutertheme[subsection=false]{udp}
 \useinnertheme{udp}
 
-
+% my package with several short hands
+% declare after all the other color declarations
+\RequirePackage{beamertools}
 
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{blocks}[rounded][shadow=true]  
