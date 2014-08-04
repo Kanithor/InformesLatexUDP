@@ -66,6 +66,10 @@
 \AMCtext{none}{Ninguna de estas respuestas es correcta.}
 \def\nac{\AMC@loc@none}
 
+% patch the form answer
+\def\AMCformQuestion#1{\vspace{\AMCformVSpace}\par{\bf Pregunta \makebox[1.5em][l]{#1:}}}
+
+
 % Sets the new aspect for the students code 
 \AMCcodeHspace=.2em
 \AMCcodeVspace=.2em
