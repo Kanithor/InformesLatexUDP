@@ -98,6 +98,18 @@
   }
   \vspace{10pt}
 }
+% Header with instructions alone
+\newcommand{\makeinstructions}{%
+  \fancyhead[C]{\begin{minipage}{0.3\textwidth}\getlogo\end{minipage}\hspace{0.2\textwidth} \begin{minipage}{0.3\textwidth}\AMCIDBoxesABC\end{minipage}}%
+  % código del curso
+  \def\@test@{\@coursecode\@testname}
+  \ifdefempty{\@test@}{}{% at least one is not empty
+    \noindent{\bf \@coursecode  \hfill \@testname}%
+  }
+  \vspace{10pt}\\%<- this enter is needed
+  \ifdefempty{\@instructions}{}{\noindent\textbf{Instrucciones.} \@instructions}
+  \vspace{10pt}\\%<- this enter is needed
+}
 
 % patch the onecopy to reset automatically figures and tables
 \let\oldonecopy\onecopy
