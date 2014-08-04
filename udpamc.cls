@@ -76,6 +76,7 @@
   \fancyhead[C]{\begin{minipage}{0.3\textwidth}\getlogo\end{minipage}\hspace{0.2\textwidth} \begin{minipage}{0.3\textwidth}\AMCIDBoxesABC\end{minipage}}%
   % código del curso
   \def\@test@{\@coursecode\@testname}
+  \def\@myhead{%
   \ifdefempty{\@test@}{}{% at least one is not empty
     \noindent{\bf \@coursecode  \hfill \@testname}%
   }
@@ -96,19 +97,33 @@
       \end{minipage}
     }}\hfill\vspace{1ex}\end{minipage}\hspace*{\fill}
   }
-  \vspace{10pt}
+  \vspace{10pt}}
+  % setup depending number of columns
+  \if@twocolumn
+    \twocolumn[\@myhead]
+  \else
+    \@myhead
+  \fi
 }
+
 % Header with instructions alone
 \newcommand{\makeinstructions}{%
   \fancyhead[C]{\begin{minipage}{0.3\textwidth}\getlogo\end{minipage}\hspace{0.2\textwidth} \begin{minipage}{0.3\textwidth}\AMCIDBoxesABC\end{minipage}}%
   % código del curso
   \def\@test@{\@coursecode\@testname}
+  \def\@myhead{%
   \ifdefempty{\@test@}{}{% at least one is not empty
     \noindent{\bf \@coursecode  \hfill \@testname}%
   }
   \vspace{10pt}\\%<- this enter is needed
   \ifdefempty{\@instructions}{}{\noindent\textbf{Instrucciones.} \@instructions}
-  \vspace{10pt}\\%<- this enter is needed
+  \vspace{10pt}\\}%<- this enter is needed
+  % setup depending number of columns
+  \if@twocolumn
+    \twocolumn[\@myhead]
+  \else
+    \@myhead
+  \fi
 }
 
 % patch the onecopy to reset automatically figures and tables
