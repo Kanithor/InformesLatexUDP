@@ -2,8 +2,6 @@
 
 \RequirePackage{udp}
 % Define my colors
-%\definecolor{MedianLightBrown}{RGB}{235,221,195}
-
 %\definecolor{frontColor}{RGB}{119,95,85}%MedianBrown
 %\definecolor{firstColor}{RGB}{148,182,210}%MedianLightBlue
 %\definecolor{secondColor}{RGB}{221,128,71}%MedianOrange
@@ -29,7 +27,11 @@
 
 
 % navigation bar
-\setbeamercolor*{section in head/foot}{fg=white,bg=black}
+\setbeamercolor*{section in head/foot}{fg=white,bg=firstColor}
+\setbeamercolor*{subsection in head/foot}{fg=white,bg=firstColor}
+\setbeamercolor*{mini frame}{fg=secondColor!90,bg=secondColor}
+\setbeamercolor{frametitle}{fg=white,bg=firstColor!80}
+\setbeamercolor{square}{bg=secondColor,fg=secondColor}%
 
 % footer
 \setbeamercolor{date in head/foot}{fg=grayudp}
