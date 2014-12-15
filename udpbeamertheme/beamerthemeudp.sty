@@ -22,7 +22,7 @@
 \RequirePackage{etoolbox}
 \def\@coursecode{}
 \def\@coursename{}
-\newcommand{\course}[2][]{\ifstrempty{#1}{\def\@coursecode{#2}}{\def\@coursecode{#1}}\def\@coursename{#2}}
+\newcommand{\course}[2][]{\ifstrempty{#1}{\def\@coursecode{}}{\def\@coursecode{#1}}\def\@coursename{#2}}
 \newcommand{\insertcoursecode}{\@coursecode}
 \newcommand{\insertcoursename}{\@coursename}
 

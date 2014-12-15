@@ -59,7 +59,7 @@
     \end{beamercolorbox}
      \vskip0.5cm%
     \begin{beamercolorbox}[wd=\the\paperwidth,leftskip=2.5cm,#1]{date}
-      \usebeamerfont{author}\insertcoursename\ (\insertcoursecode)\\
+      \usebeamerfont{author}\insertcoursename\ifdefempty{\@coursecode}{}{\ (\insertcoursecode)}\\
       \usebeamerfont{author}\insertdate
     \end{beamercolorbox}
     \vfil
