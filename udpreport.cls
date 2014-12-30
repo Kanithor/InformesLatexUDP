@@ -2,7 +2,7 @@
 % Reports for the UDP documents
 % Adin Ramirez adin.ramirez (at) mail.udp.cl
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{udpreport} [2014/12/19 v0.01 Article of the UDP]
+\ProvidesClass{udpreport} [2014/12/19 v0.01 Report of the UDP]
 
 
 % --- Class structure: declaration of options part
@@ -28,13 +28,7 @@
 
 % Headers and footers
 \RequirePackage{fancyhdr}
-%\fancypagestyle{firstpage}{
-%%
-%\fancyhf{}
-%% clear all six fields
-%\renewcommand{\headrulewidth}{0pt}
-%\renewcommand{\footrulewidth}{0pt}
-%}
+
 \fancypagestyle{followingpage}{
   %
   \fancyhf{}
@@ -54,16 +48,7 @@
   \fancyfoot[LE,RO]{\thepage}%
 }
 
-%%% Chapter and section marks
-%% chapter mark
-%\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\scriptsize #1}}{}}
-%% section mark
-%\renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\scriptsize\textit{#1}}}}
-
 \pagestyle{followingpage}
-%\AtBeginDocument{\thispagestyle{firstpage}}
-
-%\let\ps@plain\ps@firstpage% add this because maketitle triggers a \thispagestyle{plain}
 
 % Contains all the udp logos and other stuff
 \RequirePackage{udp}
