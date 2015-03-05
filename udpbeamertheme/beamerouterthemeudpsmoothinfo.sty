@@ -50,7 +50,6 @@
 
 % changes the behavior of smoothbars to put the section and the navigation side by side (Smoothbars meets infolines)
 % (http://tex.stackexchange.com/q/112539)
-\makeatletter
 \def\insertminiframescurrentsection{%
   \def\sectionentry##1##2##3##4##5{}
   \def\slideentry##1##2##3##4##5##6{%
@@ -109,59 +108,52 @@
 \defbeamertemplate*{headline}{udpsmoothinfo}
 {%
   \leavevmode%
+  \newdimen\framewidth
+  \framewidth=\paperwidth \advance\framewidth by -10pt
   \hbox{%
   \ifnum\insertframenumber>0\relax%remove it for the title page (this will have problems when the colors are different from the headline and the front page)
-  \begin{beamercolorbox}[wd=.015\paperwidth,ht=2.65ex,dp=1.5ex,right]{square}%
+  \begin{beamercolorbox}[wd=10pt,ht=2.65ex,dp=1.5ex,right]{square}%
   \end{beamercolorbox}%
   \fi%
-  \begin{beamercolorbox}[wd=.495\paperwidth,ht=2.65ex,dp=1.5ex,right]{section in head/foot}%
+  \begin{beamercolorbox}[wd=.5\framewidth,ht=2.65ex,dp=1.5ex,right]{section in head/foot}%
     \usebeamerfont{section in head/foot}\insertsubsectionhead\hspace*{2ex}
   \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=.495\paperwidth,ht=2.65ex,dp=1.5ex,left]{subsection in head/foot}%
+  \begin{beamercolorbox}[wd=.5\framewidth,ht=2.65ex,dp=1.5ex,left]{subsection in head/foot}%
     \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertminiframescurrentsection
   \end{beamercolorbox}%
   }%
   \vskip0pt%
 }
 
+\RequirePackage[many]{tcolorbox}
 \defbeamertemplate*{frametitle}{udpsmoothinfo}
 {%
   \nointerlineskip%
-  \usebeamerfont{headline}%
-  \nointerlineskip%
-  \hbox{\hspace{-0.09\paperwidth}%
-  
-  \begin{beamercolorbox}[wd=0.1\paperwidth,vmode]{square}%
-    \newdimen\titleheight%
-    \setbox0=\hbox{\usebeamerfont*{frametitle}Hj}%any letter that uses high and low
-    \titleheight=\ht0 \advance\titleheight by \dp0%
-    \vskip-.2ex%
-    \vskip\titleheight%
+  \hbox{\hspace{-28.5pt}%
+    \usebeamercolor{square}%
+    \begin{tcolorbox}[
+      enhanced,
+      boxrule=10pt,
+      colframe=fg,
+      arc=0pt,
+      outer arc=0pt,
+      colback=frametitle.bg,
+      colupper=frametitle.fg,
+      width=\paperwidth,
+      toprule=0pt,
+      bottomrule=0pt,
+      rightrule=0pt,
+      left=5pt,
+      top=0pt,
+      bottom=0pt,
+    ]%
+    {\usebeamercolor{frametitle}\usebeamerfont*{frametitle}\strut\insertframetitle\strut}
     \ifx\insertframesubtitle\@empty%
       \strut\par%
     \else%
-      \setbox0=\hbox{\usebeamerfont*{framesubtitle}Hj}%
-      \titleheight=\ht0 \advance\titleheight by \dp0%
-      \par{%
-      \vskip\titleheight%
-      \strut\par%
-      \vskip-.65ex%
-      }%
-    \fi%
-    \usebeamerfont{headline}%
-    \vskip.5ex%
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=0.99\paperwidth,leftskip=.3cm,rightskip=.3cm plus1fil,vmode]{frametitle}%
-    \vskip.5ex%
-    \usebeamerfont*{frametitle}\insertframetitle%
-    \ifx\insertframesubtitle\@empty%
-      \strut\par%
-    \else%
-      \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
-    \fi%%
-    \usebeamerfont{headline}%
-    \vskip.5ex%
-  \end{beamercolorbox}%
+     \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\par}%
+    \fi
+  \end{tcolorbox}%
   }
   \nointerlineskip
 }
