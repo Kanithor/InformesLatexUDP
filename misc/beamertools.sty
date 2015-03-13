@@ -5,13 +5,14 @@
 % Define the keys for the doublecolumnframe (dcl)
 % Remember: \define@cmdkey[prefix]{family}[mp]{key}   [default]{function}
 \define@cmdkey[udp]{dcf}{title}{}%    title of the frame
+\define@cmdkey[udp]{dcf}{subtitle}{}%    subtitle of the frame
 \define@cmdkey[udp]{dcf}{wp}{}% width percentage
 \define@cmdkey[udp]{dcf}{align}{}% alignment of the columns
-\presetkeys[udp]{dcf}{title=,wp=0.5,align=c}{}
+\presetkeys[udp]{dcf}{title=,subtitle=,wp=0.5,align=c}{}
 
 \newcommand{\doublecolumnframe}[3][]{%
 \setkeys[udp]{dcf}{#1}
-\begin{frame}{\cmdudp@dcf@title}%
+\begin{frame}{\cmdudp@dcf@title}{\cmdudp@dcf@subtitle}%
   \begin{columns}[\cmdudp@dcf@align]
     \begin{column}{\cmdudp@dcf@wp\linewidth}%
     #2%
@@ -94,3 +95,40 @@
 % smaller fonts
 \RequirePackage{lmodern}
 \newcommand{\mini}{\@setfontsize\miniscule{5}{6}}% \tiny: 6/7
+
+% Other commands
+\newcommand\ChangeItemFont[3]{%
+\renewcommand{\itemize}[1][]{%
+  \beamer@ifempty{##1}{}{\def\beamer@defaultospec{#1}}%
+  \ifnum \@itemdepth >2\relax\@toodeep\else
+    \advance\@itemdepth\@ne
+    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+    \list
+      {\usebeamertemplate{itemize \beameritemnestingprefix item}}
+      {\def\makelabel####1{%
+          {%
+            \hss\llap{{%
+                \usebeamerfont*{itemize \beameritemnestingprefix item}%
+                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}####1}}%
+          }%
+        }%
+  \ifnum\@itemdepth=1\relax
+    #1%
+  \else
+  \ifnum\@itemdepth=2\relax
+    #2%
+  \else
+  \ifnum\@itemdepth=3\relax
+    #3%
+  \fi%
+  \fi%
+  \fi%
+  }
+  \fi%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}}
