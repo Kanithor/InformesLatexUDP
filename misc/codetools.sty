@@ -48,6 +48,36 @@
     {ñ}{{\~{n}}}1
     {Ñ}{{\~{N}}}1
 }
+
+% Highlights on lines using tikz
+% http://tex.stackexchange.com/a/49309/7561
+% E.g.,
+%  \lstdefinestyle{SQL}{
+%      language={SQL},basicstyle=\ttfamily, 
+%      moredelim=**[is][\btHL]{`}{`},
+%      moredelim=**[is][{\btHL[fill=green!30,draw=red,dashed,thin]}]{@}{@},
+%  }
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%   
+  \egroup
+}
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{1pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west, fill=orange!30,outer sep=0pt,inner xsep=1pt, inner ysep=0pt, rounded corners=3pt, minimum height=\ht\strutbox+1pt,#1]{\raisebox{1pt}{\strut}\strut\usebox{#2}};
+  }%
+}
+
+
+
 \renewcommand{\lstlistingname}{Algoritmo}% Listing -> Algoritmo
 % bold in monospaced font
 \DeclareFontShape{OT1}{cmtt}{bx}{n}{<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
