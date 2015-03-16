@@ -2802,8 +2802,14 @@
 
 
 % Set logo for first page
+\def\@headertext
 \def\@logo{}
-\newcommand{\@setlogo}[1]{\def\@logo{#1}}
+\newcommand{\@setlogo}[1]{\def\@logo{%
+\begin{minipage}{\@logosz}
+#1\\%
+\tiny \textbf{\@headertext}
+\end{minipage}%
+}}
 \newcommand{\getlogo}{\@logo}% return the logo
 
 % Set logo size
@@ -2815,4 +2821,5 @@
 \newcommand\@setlogotikz[1]{ \@setlogo{ \resizebox{\@logosz}{!}{#1} } }
 
 % We need to create the logos like \setlogo{EIT}, \setlogo{EITFI}
-\newcommand\setlogo[1]{ \@setlogotikz{\csname logo#1\endcsname} }
+% We can also pass the header below the logo if needed
+\newcommand\setlogo[2][]{ \@setlogotikz{\csname logo#2\endcsname}\def\@headertext{#1} }
