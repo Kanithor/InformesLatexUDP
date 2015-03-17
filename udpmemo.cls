@@ -4,7 +4,7 @@
 % Author: Adin Ramirez
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{memoudp}[2010/07/31 - Simple Memo Class, Including Logo]
+\ProvidesClass{udpmemo}[2010/07/31 - Simple Memo Class for UDP]
 \RequirePackage{palatino}
 
 \usepackage{graphicx}
