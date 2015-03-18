@@ -19,6 +19,9 @@
 % --- Class structure: declaration of options part
 % ---
 \LoadClass{article}
+% Some package loads xcolor and we need to pass this argument to it
+\PassOptionsToPackage{dvipsnames}{xcolor}
+
 
 % Page layout
 \RequirePackage[left=2.5cm,right=2.5cm,top=2cm,bottom=2cm]{geometry}
@@ -94,3 +97,13 @@
 \decimalpoint% changes the coma in the numbers to period
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{csquotes}
+
+\RequirePackage{hyperref}
+\RequirePackage{cleveref}
+
+\hypersetup{
+  linkcolor  = red!50!black,
+  citecolor  = black,
+  urlcolor   = violet!85!black,
+  colorlinks = true,
+  }
