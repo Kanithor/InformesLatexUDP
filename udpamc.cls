@@ -57,10 +57,15 @@
 \def\@instructions{}
 \newcommand{\instructions}[1]{\def\@instructions{#1}}
 
-\def\@coursecode{}
-\def\@testname{}
-\newcommand{\coursecode}[1]{\def\@coursecode{#1}}
-\newcommand{\testname}[1]{\def\@testname{#1}}
+\def\@rightheader{}
+\def\@leftheader{}
+\newcommand{\rightheader}[1]{\def\@rightheader{#1}}
+\newcommand{\leftheader}[1]{\def\@leftheader{#1}}
+
+% depracated
+
+\newcommand{\coursecode}[1]{\PackageWarning{udpamc}{\noexpand\coursecode is deprecated, prefer \noexpand\leftheader or \noexpand\rightheader commands}\def\@rightheader{#1}}
+\newcommand{\testname}[1]{\PackageWarning{udpamc}{\\testname is deprecated, prefer \\leftheader or \\rightheader commands}\def\@leftheader{#1}}
 
 % patch the definition of NAC in the spanish toolbox
 \AMCtext{none}{Ninguna de estas respuestas es correcta.}
@@ -79,10 +84,10 @@
 \newcommand{\makename}{%
   \fancyhead[C]{\begin{minipage}{0.3\textwidth}\getlogo\end{minipage}\hspace{0.2\textwidth} \begin{minipage}{0.3\textwidth}\AMCIDBoxesABC\end{minipage}}%
   % código del curso
-  \def\@test@{\@coursecode\@testname}
+  \def\@test@{\@rightheader\@leftheader}
   \def\@myhead{%
   \ifdefempty{\@test@}{}{% at least one is not empty
-    \noindent{\bf \@coursecode  \hfill \@testname}%
+    \noindent{\bf \@leftheader \hfill \@rightheader}%
   }
   \vspace{10pt}\\%<- this enter is needed
   \ifdefempty{\@instructions}{}{\noindent\textbf{Instrucciones.} \@instructions}
@@ -114,10 +119,10 @@
 \newcommand{\makeinstructions}{%
   \fancyhead[C]{\begin{minipage}{0.3\textwidth}\getlogo\end{minipage}\hspace{0.2\textwidth} \begin{minipage}{0.3\textwidth}\AMCIDBoxesABC\end{minipage}}%
   % código del curso
-  \def\@test@{\@coursecode\@testname}
+  \def\@test@{\@rightheader\@leftheader}
   \def\@myhead{%
   \ifdefempty{\@test@}{}{% at least one is not empty
-    \noindent{\bf \@coursecode  \hfill \@testname}%
+    \noindent{\bf \@leftheader \hfill \@rightheader}%
   }
   \vspace{10pt}\\%<- this enter is needed
   \ifdefempty{\@instructions}{}{\noindent\textbf{Instrucciones.} \@instructions}
@@ -147,3 +152,8 @@
   \BeforeBeginEnvironment{choices}{\begin{multicols}{2}\AMCBoxedAnswers}
   \AfterEndEnvironment{choices}{\end{multicols}}
 }
+
+% patch ~ in AMC, so when using spanish it doesn't break
+\patchcmd{\AMCopen@lines}{~ }%<- this space is needed
+{\hspace*{0pt}}
+{}{}
