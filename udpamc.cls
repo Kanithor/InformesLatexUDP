@@ -71,7 +71,9 @@
 \AMCtext{none}{Ninguna de estas respuestas es correcta.}
 \def\nac{\AMC@loc@none}
 
-% patch the form answer
+% patch the question beginning (question sheet)
+\def\AMCbeginQuestion#1#2{\par\noindent{\bf #1.} #2}
+% patch the question beginning (form answer)
 \def\AMCformQuestion#1{\vspace{\AMCformVSpace}\par{\bf Pregunta \makebox[1.5em][l]{#1:}}}
 
 
