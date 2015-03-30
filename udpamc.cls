@@ -62,8 +62,7 @@
 \newcommand{\rightheader}[1]{\def\@rightheader{#1}}
 \newcommand{\leftheader}[1]{\def\@leftheader{#1}}
 
-% depracated
-
+% depracated (message)
 \newcommand{\coursecode}[1]{\PackageWarning{udpamc}{\noexpand\coursecode is deprecated, prefer \noexpand\leftheader or \noexpand\rightheader commands}\def\@rightheader{#1}}
 \newcommand{\testname}[1]{\PackageWarning{udpamc}{\\testname is deprecated, prefer \\leftheader or \\rightheader commands}\def\@leftheader{#1}}
 
@@ -76,6 +75,9 @@
 % patch the question beginning (form answer)
 \def\AMCformQuestion#1{\vspace{\AMCformVSpace}\par{\bf Pregunta \makebox[1.5em][l]{#1:}}}
 
+% Sets the vertical space between answer and question
+\AMCinterBrep=0ex%space between answers
+\AMCinterBquest=3ex% space after question
 
 % Sets the new aspect for the students code 
 \AMCcodeHspace=.2em
@@ -151,11 +153,35 @@
 % patch multicol answers
 \RequirePackage{multicol}
 \def\twocolanswers{%
-  \BeforeBeginEnvironment{choices}{\begin{multicols}{2}\AMCBoxedAnswers}
-  \AfterEndEnvironment{choices}{\end{multicols}}
+  \BeforeBeginEnvironment{choices}{\begin{multicols}{2}\AMCBoxedAnswers}%
+  \AfterEndEnvironment{choices}{\end{multicols}}%
 }
 
 % patch ~ in AMC, so when using spanish it doesn't break
 \patchcmd{\AMCopen@lines}{~ }%<- this space is needed
 {\hspace*{0pt}}
 {}{}
+
+% Add functionality to hold boxes
+% http://tex.stackexchange.com/q/195005/7561
+% Mi código para generar cajas para código automaticamente
+\newcounter{myboxcounter}
+\setcounter{myboxcounter}{0}
+\newenvironment{specialbox}[1][]{%
+  \ifstrempty{#1}{%
+    \addtocounter{myboxcounter}{1}%
+    \expandafter\newsavebox\csname foobox\roman{myboxcounter}\endcsname%
+    \global\expandafter\setbox\csname foobox\roman{myboxcounter}\endcsname\hbox\bgroup\color@setgroup\ignorespaces%
+  }{%
+    \expandafter\newsavebox\csname foobox#1\endcsname%
+    \global\expandafter\setbox\csname foobox#1\endcsname\hbox\bgroup\color@setgroup\ignorespaces%
+  }
+}{%
+  \color@endgroup\egroup
+}
+
+\newcommand{\insertbox}[1][]{%\stepcounter{myboxcounter}%
+  \ifstrempty{#1}%
+  {\expandafter\usebox\csname foobox\roman{myboxcounter}\endcsname}%
+  {\expandafter\usebox\csname foobox#1\endcsname}%
+}
