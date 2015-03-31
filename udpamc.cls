@@ -103,7 +103,7 @@
   \vspace{3ex}
   \hfill\namefield{\fbox{    
       \begin{minipage}{.9\linewidth}
-        Nombre(s) y appellido(s):\\\\
+        Nombre(s) y apellido(s):\\\\
         \vspace*{.5cm}\dotfill\\
         \vspace*{.5cm}\dotfill
         \vspace*{1mm}
