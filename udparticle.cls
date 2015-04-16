@@ -64,12 +64,7 @@
 \let\headertext\setheadertext
 
 \def\@myheader{%
-\ifdefempty{\@logo}{}{%ifnotempty
-\begin{minipage}{\@logosz}
-\@logo\\%
-\tiny \textbf{\@headertext}
-\end{minipage}%
-}%ifnotmtarg
+\getlogo
 }%end \@myheader
 
 % Re-define the title
