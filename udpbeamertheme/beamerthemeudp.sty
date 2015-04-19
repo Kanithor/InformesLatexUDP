@@ -40,8 +40,19 @@
 % Fonts profesionales (nice math mode)
 \usefonttheme{professionalfonts}
 
+% lets fix the footnote
+% http://tex.stackexchange.com/a/192652/7561
+\setbeamertemplate{footnote}{%
+  \tiny%
+  \parindent 1em\noindent%
+  \raggedright
+  \hbox to 1em{\hfil\insertfootnotemark}\insertfootnotetext\par% este controla el indent de la footnote
+}%
+\setlength\footnotesep{0pt}
+
 % Establece los colores
 % http://tex.stackexchange.com/a/13424/7561
-\hypersetup{colorlinks,linkcolor=,urlcolor=orange}
+\hypersetup{colorlinks,linkcolor=,urlcolor=orange!80!gray}
 
 \mode<all>
+
