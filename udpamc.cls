@@ -72,10 +72,6 @@
 % patch the question beginning (form answer)
 \def\AMCformQuestion#1{\vspace{\AMCformVSpace}\par{\bf Pregunta \makebox[1.5em][l]{#1:}}}
 
-% Sets the vertical space between answer and question
-\AMCinterBrep=0ex%space between answers
-\AMCinterBquest=3ex% space after question
-
 % Sets the new aspect for the students code 
 \AMCcodeHspace=.2em
 \AMCcodeVspace=.2em
@@ -150,7 +146,7 @@
 % patch multicol answers
 \RequirePackage{multicol}
 \def\twocolanswers{%
-  \BeforeBeginEnvironment{choices}{\begin{multicols}{2}\AMCBoxedAnswers}%
+  \BeforeBeginEnvironment{choices}{\setlength{\multicolsep}{3pt}\begin{multicols}{2}\AMCBoxedAnswers}%
   \AfterEndEnvironment{choices}{\end{multicols}}%
 }
 
