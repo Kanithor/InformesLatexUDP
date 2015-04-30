@@ -55,6 +55,12 @@
 \def\@memoccsep{,}
 \newcommand{\memocc}[2][,]{\gdef\@memocc{#2}\xdef\@memoccsep{#1}}
 
+% Spaces for the signature and the cc text
+\newlength{\sigspace}
+\newlength{\ccspace}
+\setlength{\sigspace}{3cm}
+\setlength{\ccspace}{1cm}
+
 % Custom Document Formatting
 \newcommand\decorativeline[1][1pt]{
   \par\noindent%
@@ -75,11 +81,10 @@
     \begin{flushright}
       \vspace{-0.6in}
       \@memologo
-      \vspace{0.1in}
     \par\end{flushright}%
   \end{minipage}
   }
-  {\begin{center}
+  {\vspace{-0.6in}\begin{center}
   \LARGE\bf
   M\textsc{emorándum\ifthenelse{\equal{\@memoid}{\relax}}{}{ \@memoid}}
   \end{center}}
@@ -109,21 +114,20 @@
   \end{minipage}
 }
 
-\newcommand{\signature}[1]{
+\newcommand{\signature}[1]{%
   \def\nextitem{\def\nextitem{\\}}% Separator
-  \renewcommand*{\do}[1]{\nextitem##1}
-  \begin{minipage}{.4\columnwidth}
-  \begin{center}
-  \expandafter\docsvlist\expandafter{#1}
-  \end{center}
-  \end{minipage}
-  
+  \renewcommand*{\do}[1]{\nextitem##1}%
+  \begin{minipage}{.4\columnwidth}%
+  \begin{center}%
+  \expandafter\docsvlist\expandafter{#1}%
+  \end{center}%
+  \end{minipage}%
 }
 
 % Set the closing, add signature and cc
 \AtEndDocument{%
-\ifthenelse{\equal{\@memofrom}{\relax }}{}{~\\\vskip3cm\hspace{0.5\textwidth}\signature{\@memofrom}}
-\ifthenelse{\equal{\@memocc}{\relax }}{}{~\\[1cm]\footnotesize\cc[\@memoccsep]{\@memocc}}
+\ifthenelse{\equal{\@memofrom}{\relax }}{}{~\\\vskip\sigspace\hspace{0.5\textwidth}\signature{\@memofrom}}%
+\ifthenelse{\equal{\@memocc}{\relax }}{}{~\\[\ccspace]\footnotesize\cc[\@memoccsep]{\@memocc}}%
 }
 
 % Other commands
