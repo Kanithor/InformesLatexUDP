@@ -22,6 +22,11 @@
   }%
 }
 
+\def\udpamc@opt{}
+\DeclareOption{circle}{% 
+  \gdef\udpamc@opt{\AMCboxDimensions{shape=oval,width=10pt,height=10pt}}
+}%
+
 % declare all options that should be passed to article
 \batchPassOptionsToClass
   {a4paper,legalpaper} % list all options that should be passed to article here
@@ -36,6 +41,9 @@
 
 \LoadClass{article}
 \RequirePackage[box,lang=ES]{automultiplechoice}
+
+% load my options
+\udpamc@opt
 
 % for patching
 \RequirePackage{etoolbox}
