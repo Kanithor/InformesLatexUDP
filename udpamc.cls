@@ -83,7 +83,7 @@
 % Sets the new aspect for the students code 
 \AMCcodeHspace=.2em
 \AMCcodeVspace=.2em
-\AMCcodeBoxSep=.1em
+%\AMCcodeBoxSep=.1em
 
 % creates the header for the automultichoice
 \newcommand{\makename}{%
