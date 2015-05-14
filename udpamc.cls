@@ -24,7 +24,7 @@
 
 \def\udpamc@opt{}
 \DeclareOption{circle}{% 
-  \gdef\udpamc@opt{\AMCboxDimensions{shape=oval,width=10pt,height=10pt}}
+  \gdef\udpamc@opt{\AMCboxDimensions{shape=oval,width=2.5ex,height=2.5ex}}
 }%
 
 % declare all options that should be passed to article
@@ -41,7 +41,7 @@
 
 \LoadClass{article}
 \RequirePackage[box,lang=ES]{automultiplechoice}
-
+\RequirePackage{tikz}
 % load my options
 \udpamc@opt
 
@@ -79,11 +79,10 @@
 \def\AMCbeginQuestion#1#2{\par\noindent{\bf #1.} #2}
 % patch the question beginning (form answer)
 \def\AMCformQuestion#1{\vspace{\AMCformVSpace}\par{\bf Pregunta \makebox[1.5em][l]{#1:}}}
-
-% Sets the new aspect for the students code 
-\AMCcodeHspace=.2em
-\AMCcodeVspace=.2em
-%\AMCcodeBoxSep=.1em
+% patch the space before every question
+\def\AMCbeforeQuestion{\vspace{\AMCformVSpace}\par}
+% patch indent on the elements
+\AtBeginEnvironment{element}{\noindent}
 
 % creates the header for the automultichoice
 \newcommand{\makename}{%
@@ -97,8 +96,16 @@
   \vspace{10pt}\\%<- this enter is needed
   \ifdefempty{\@instructions}{}{\noindent\textbf{Instrucciones.} \@instructions}
   \vspace{10pt}\\%<- this enter is needed
-  % identificación
+  % Identification
+  % Sets the new aspect for the students code 
+  \let\oldAMChspace\AMCcodeHspace
+  \let\oldAMCvspace\AMCcodeVspace
+  \AMCcodeHspace=.2em
+  \AMCcodeVspace=.2em
   {\setlength{\parindent}{0pt}\hspace*{\fill}\AMCcode{rut}{8}\hspace*{\fill}
+  % Restate the old values
+  \AMCcodeHspace=\oldAMChspace
+  \AMCcodeVspace=\oldAMCvspace
   \begin{minipage}[b]{6.5cm}
   $\longleftarrow{}$ Marque su RUT sin c\'odigo verificador (el n\'umero despu\'es del gui\'on), y escriba sus nombres y apellidos abajo.
   \vspace{3ex}
