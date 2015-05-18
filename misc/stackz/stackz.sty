@@ -49,8 +49,18 @@ decorations.pathreplacing,%
   address bottom=,
   address top/.store in=\@address@top,
   address top=,
+  address left bottom/.store in=\@address@bottom,
+  address left bottom=,
+  address left top/.store in=\@address@top,
+  address left top=,
+  address right bottom/.store in=\@address@right@bottom,
+  address right bottom=,
+  address right top/.store in=\@address@right@top,
+  address right top=,
   align/.store in=\@align,
   align=r,
+  cell alias/.store in=\@cell@alias,
+  cell alias=,
   %
   % the styles should be on the tikz tree (so it is compatible with it)
   /tikz/.cd,
@@ -59,7 +69,7 @@ decorations.pathreplacing,%
   freecell/.style 2 args={color cell={#1}{#2}},
   freecell/.default={\@cell@fg!10}{\@cell@fg!30!\@cell@bg},%
   %
-  textcell/.style 2 args={text width=#1,align=center, minimum width=#1,minimum height=#2,outer sep=0pt},%
+  textcell/.style 2 args={align=center,  text width=#1, minimum width=#1,minimum height=#2,outer sep=0pt},%
   textcell/.default={\@minwidth}{\@minheight},
   %
   freestruct/.style 2 args={color cell={#1}{#2}},
@@ -77,7 +87,7 @@ decorations.pathreplacing,%
   address/.style={color=#1,font=\footnotesize},
   address/.default=\@address@fg,
   %
-  default cell/.style={textcell, minimum height=\@minheight*#1, below=-.5pt of cell\theprevcell, alias=currentcell},
+  default cell/.style={textcell, minimum height={#1*\@minheight}, below=-.5pt of \@prev@cell, alias=currentcell},
   default cell/.default={1},%
   % helpers to get execution on styles
   execute style/.style = {#1},
@@ -109,22 +119,26 @@ decorations.pathreplacing,%
 
 \setcounter{cellnb}{0}
 
+\newcommand{\@cell@num}[1]{cell#1-\pgfpictureid}
+\newcommand{\@cur@cell}{\@cell@num{\thecellnb}}
+\newcommand{\@prev@cell}{\@cell@num{\theprevcell}}
+
 \newcommand{\llcell}[2]{
   \setcounter{prevcell}{\value{cellnb}}
-  \addtocounter{cellnb}{#1}
+  \addtocounter{cellnb}{1}
   \setcounter{ptrnb}{0}
-  \node[default cell=#1, /stackz/cell] (cell\thecellnb) {#2};
+  \node[default cell=#1, /stackz/cell, alias=\@cell@alias] (\@cur@cell) {#2};
 }
 
-\newcommand{\bigcell}[2]{
-  \llcell{#1}{freecell}{#2}
-  \foreach \c in {2,...,#1} {
-    \draw[freecell]
-    (-2,\value{cellnb}+\c-1.5) -- (-1.7,\value{cellnb}+\c-1.5);
-    \draw[freecell]
-    (1.7,\value{cellnb}+\c-1.5) -- (2,\value{cellnb}+\c-1.5);
-  }
-}
+%\newcommand{\bigcell}[2]{
+%  \llcell{#1}{freecell}{#2}
+%  \foreach \c in {2,...,#1} {
+%    \draw[freecell]
+%    (-2,\value{cellnb}+\c-1.5) -- (-1.7,\value{cellnb}+\c-1.5);
+%    \draw[freecell]
+%    (1.7,\value{cellnb}+\c-1.5) -- (2,\value{cellnb}+\c-1.5);
+%  }
+%}
 
 % Macros for address formating
 % replaces spaces with thin spaces
@@ -152,14 +166,23 @@ decorations.pathreplacing,%
     size=1,
     cell/.style={freecell},
     address bottom=,address top=,
+    address right bottom=,address right top=,
+    cell alias=,
     #1}
   \llcell{\@size}{#2}
-  
+  % type set left
   \ifdefempty{\@address@bottom}{}{
-    \draw ($(cell\thecellnb.south west)$) node[anchor=south east,address] {\addresstt{\@address@bottom}};
+    \draw ($(\@cur@cell.south west)$) node[anchor=south east,address] {\addresstt{\@address@bottom}};
   }
   \ifdefempty{\@address@top}{}{
-    \draw ($(cell\thecellnb.north west)$) node[anchor=north east,address] {\addresstt{\@address@top}};
+    \draw ($(\@cur@cell.north west)$) node[anchor=north east,address] {\addresstt{\@address@top}};
+  }
+  % type set right
+  \ifdefempty{\@address@right@bottom}{}{
+    \draw ($(\@cur@cell.south east)$) node[anchor=south west,address] {\addresstt{\@address@right@bottom}};
+  }
+  \ifdefempty{\@address@right@top}{}{
+    \draw ($(\@cur@cell.north east)$) node[anchor=north west,address] {\addresstt{\@address@right@top}};
   }
 }
 
@@ -168,7 +191,7 @@ decorations.pathreplacing,%
   cell/.style={freecell,line width=2pt,},
   #1}
   \begin{pgfonlayer}{foreground layer}
-    \draw[/stackz/cell] (cell\thecellnb.south west) -- (cell\thecellnb.south east);
+    \draw[/stackz/cell] (\@cur@cell.south west) -- (\@cur@cell.south east);
   \end{pgfonlayer}
 }
 
@@ -190,11 +213,11 @@ decorations.pathreplacing,%
   \expandafter\ifstrequal\@align{l}{%
   %left side brace
     \pgfkeys{/stackz/.cd,anchor=west,offset=-.3,#1}
-    \draw[<-,/stackz/arrow] ($(cell\thecellnb.\@anchor)$) -- +(\@offset,\value{ptrnb}*0.35) node[anchor=east,/stackz/cell] {#2};
+    \draw[<-,/stackz/arrow] ($(\@cur@cell.\@anchor)$) -- +(\@offset,\value{ptrnb}*0.35) node[anchor=east,/stackz/cell] {#2};
   }{%
   %right side brace
     \pgfkeys{/stackz/.cd,anchor=east,#1}
-    \draw[<-,/stackz/arrow] ($(cell\thecellnb.\@anchor)$) -- +(\@offset,\value{ptrnb}*0.35) node[anchor=west,/stackz/cell] {#2};
+    \draw[<-,/stackz/arrow] ($(\@cur@cell.\@anchor)$) -- +(\@offset,\value{ptrnb}*0.35) node[anchor=west,/stackz/cell] {#2};
   }
   \addtocounter{ptrnb}{1}
 }
@@ -211,21 +234,21 @@ decorations.pathreplacing,%
   \expandafter\ifstrequal\@align{l}{%
   %left side brace
     \pgfkeys{/stackz/.cd,anchor=west,#1}
-    \draw ($(cell\thecellnb.\@anchor)+(-5pt,0)$) node[anchor=east, /stackz/cell] {#2};
+    \draw ($(\@cur@cell.\@anchor)+(-5pt,0)$) node[anchor=east, /stackz/cell] {#2};
   }{%
   %right side brace
     \pgfkeys{/stackz/.cd,anchor=east,#1}
-    \draw ($(cell\thecellnb.\@anchor)+(5pt,0)$) node[anchor=west, /stackz/cell] {#2};
+    \draw ($(\@cur@cell.\@anchor)+(5pt,0)$) node[anchor=west, /stackz/cell] {#2};
   }
 }
 
 
 \newcommand{\cellround}[2][xshift=3cm]{
   \begin{pgfonlayer}{foreground layer}
-    \draw[highlight] (cell\thecellnb)
+    \draw[highlight] (\@cur@cell)
     node[shape=ellipse,draw, minimum width=3cm, minimum height=0.9cm]
     (marked) {};
-    \draw[highlight] (cell\thecellnb) node[anchor=west,#1] (textmarked) {#2};
+    \draw[highlight] (\@cur@cell) node[anchor=west,#1] (textmarked) {#2};
     \draw[highlight,->] (marked) -- (textmarked);
   \end{pgfonlayer}
 }
@@ -236,9 +259,9 @@ decorations.pathreplacing,%
     cell/.style={freecell},
     #1}
   \setcounter{cellnb}{0}
-  \draw (0,0) node[textcell](cell\thecellnb) {...};
+  \draw (0,0) node[textcell](\@cur@cell) {...};
   \begin{pgfonlayer}{background layer}
-    \draw[/stackz/cell] (cell\thecellnb.north west) -- (cell\thecellnb.south west) -- (cell\thecellnb.south east) -- (cell\thecellnb.north east);
+    \draw[/stackz/cell] (\@cur@cell.north west) -- (\@cur@cell.south west) -- (\@cur@cell.south east) -- (\@cur@cell.north east);
   \end{pgfonlayer}
 }
 
@@ -249,9 +272,9 @@ decorations.pathreplacing,%
   \setcounter{prevcell}{\value{cellnb}}
   \addtocounter{cellnb}{1}
   \setcounter{ptrnb}{0}
-  \node[textcell, below=-.5pt of cell\theprevcell] (cell\thecellnb) {...};
+  \node[textcell, below=-.5pt of \@prev@cell] (\@cur@cell) {...};
   \begin{pgfonlayer}{background layer}
-    \draw[/stackz/cell] (cell\thecellnb.south west) -- (cell\thecellnb.north west) -- (cell\thecellnb.north east) -- (cell\thecellnb.south east);
+    \draw[/stackz/cell] (\@cur@cell.south west) -- (\@cur@cell.north west) -- (\@cur@cell.north east) -- (\@cur@cell.south east);
   \end{pgfonlayer}
 }
 
@@ -259,11 +282,15 @@ decorations.pathreplacing,%
 {\pgfkeys{/stackz/.cd,#1}\begin{tikzpicture}\stacktop{}}%
 {\stackbottom\end{tikzpicture}}
 
+\newcommand{\initstack}{%
+  \coordinate (\@cell@num{0}) at (0,0);
+  \setcounter{cellnb}{0}
+}
+
 \newenvironment{drawfullstack}[1][]%
 {\pgfkeys{/stackz/.cd,#1}\begin{tikzpicture}
   % since there is not top, we need to create a cell0 artificially
-  \coordinate (cell0) at (0,0);
-  \setcounter{cellnb}{0}
+  \initstack%
 }%
 {\end{tikzpicture}}
 
@@ -284,10 +311,10 @@ decorations.pathreplacing,%
   #1}
   \expandafter\ifstrequal\@align{l}{%
   %left side brace
-    \draw [decorate,decoration={brace,amplitude=10pt,mirror}]     ($(cell\thestartframe.north west)+(-5pt,0)$) -- ($(cell\thecellnb.south west)+(-5pt,0)$) node[midway,anchor=east,xshift=-10pt,text width=3cm,align=right] {#2};
+    \draw [decorate,decoration={brace,amplitude=10pt,mirror}]     ($(\@cell@num{\thestartframe}.north west)+(-5pt,0)$) -- ($(\@cur@cell.south west)+(-5pt,0)$) node[midway,anchor=east,xshift=-10pt,text width=3cm,align=right] {#2};
   }{%
   %right side brace
-    \draw [decorate,decoration={brace,amplitude=10pt}] ($(cell\thestartframe.north east)+(5pt,0)$) -- ($(cell\thecellnb.south east)+(5pt,0)$) node[midway,text width=3cm,align=left,xshift=10pt,anchor=west] {#2};
+    \draw [decorate,decoration={brace,amplitude=10pt}] ($(\@cell@num{\thestartframe}.north east)+(5pt,0)$) -- ($(\@cur@cell.south east)+(5pt,0)$) node[midway,text width=3cm,align=left,xshift=10pt,anchor=west] {#2};
   }
 }
 \newcommand{\stackframe}[3]{
