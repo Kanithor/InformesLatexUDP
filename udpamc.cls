@@ -171,6 +171,10 @@
 {\hspace*{0pt}}
 {}{}
 
+% macro to draw marks in instructions
+\newcommand{\emptybox}{\AMC@answerBox@{}{}{}{}}
+\newcommand{\fillbox}{\AMC@answerBox@{}{1}{}{}}
+
 
 % Add functionality to hold boxes
 % http://tex.stackexchange.com/q/195005/7561
