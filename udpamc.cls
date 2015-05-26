@@ -43,7 +43,8 @@
 \RequirePackage[box,lang=ES]{automultiplechoice}
 \RequirePackage{tikz}
 % load my options
-\udpamc@opt
+\AtBeginDocument{\udpamc@opt}
+
 
 % for patching
 \RequirePackage{etoolbox}
@@ -169,6 +170,7 @@
 \patchcmd{\AMCopen@lines}{~ }%<- this space is needed
 {\hspace*{0pt}}
 {}{}
+
 
 % Add functionality to hold boxes
 % http://tex.stackexchange.com/q/195005/7561
