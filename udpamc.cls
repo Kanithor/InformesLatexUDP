@@ -85,6 +85,9 @@
 % patch indent on the elements
 \AtBeginEnvironment{element}{\noindent}
 
+% patch space
+\AMCinterBquest=1.5ex
+
 % creates the header for the automultichoice
 \newcommand{\makename}{%
   \fancyhead[C]{\begin{minipage}{0.3\textwidth}\getlogo\end{minipage}\hspace{0.2\textwidth} \begin{minipage}{0.3\textwidth}\AMCIDBoxesABC\end{minipage}}%
