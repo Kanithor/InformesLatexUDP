@@ -43,7 +43,8 @@
 \RequirePackage[box,lang=ES]{automultiplechoice}
 \RequirePackage{tikz}
 % load my options
-\udpamc@opt
+\AtBeginDocument{\udpamc@opt}
+
 
 % for patching
 \RequirePackage{etoolbox}
@@ -83,6 +84,9 @@
 \def\AMCbeforeQuestion{\vspace{\AMCformVSpace}\par}
 % patch indent on the elements
 \AtBeginEnvironment{element}{\noindent}
+
+% patch space
+\AMCinterBquest=1.5ex
 
 % creates the header for the automultichoice
 \newcommand{\makename}{%
@@ -169,6 +173,11 @@
 \patchcmd{\AMCopen@lines}{~ }%<- this space is needed
 {\hspace*{0pt}}
 {}{}
+
+% macro to draw marks in instructions
+\newcommand{\emptybox}{\AMC@answerBox@{}{}{}{}}
+\newcommand{\fillbox}{\AMC@answerBox@{}{1}{}{}}
+
 
 % Add functionality to hold boxes
 % http://tex.stackexchange.com/q/195005/7561
