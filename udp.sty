@@ -2,6 +2,24 @@
 % Package for several UDP utilities
 % Adin Ramirez adin.ramirez (at) mail.udp.cl
 
+% hack for logos to be loaded from .sty and .cls as well as normal .tex files
+% so we need to dynamically set @ as letter or normal font depending on the previous state
+% if it was letter (catcode 11) leave it like that, else change it to letter and back with unset
+\newif\ifatwasother
+\newcommand{\@setat}{%
+  \def\x{\the\catcode`@}
+  \ifnum\x=12 %special @, then make it normal
+    \atwasothertrue
+    \makeatletter
+  \else
+    \atwasotherfalse
+  \fi
+}
+\newcommand{\@unsetat}{%
+  \ifatwasother
+    \makeatother
+  \fi
+}
 
 % Definition of the logos of the EIT UDP in TikZ format
 \RequirePackage{xcolor}
@@ -34,7 +52,9 @@
 \newcommand\setlogo[2][]{%
   % we load the logo from their respective file 
   % this factorization allows to add new logos without changing this code
+  \@setat% changes @ dynamically
   \input{logos/#2.logo}
+  \@unsetat% reverts @
   \@setlogotikz{\csname @logo#2\endcsname}\def\@headertext{#1}}
 
 % default logo

@@ -1,6 +1,4 @@
 % Logo MCIFI Magíster en Ciencias de la Ingeniería Facultad de Ingeniería
-% the extension is not .sty, so we need to explicitly change the @ to letter, and reverted at the end
-\makeatletter
 
 
 % These logos were generated using http://code.google.com/p/inkscape2tikz/
@@ -755,6 +753,3 @@
 
 \end{tikzpicture}
 }%end \def\logoMCI
-
-% reverting @
-\makeatother

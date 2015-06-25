@@ -1,7 +1,4 @@
 % Logo EITFI Escuela de Informática y Telecomunicaciones Facultad de Ingeniería
-% the extension is not .sty, so we need to explicitly change the @ to letter, and reverted at the end
-\makeatletter
-
 
 % These logos were generated using http://code.google.com/p/inkscape2tikz/
 % And the AI files was taken from http://www.intranet.udp.cl/index.php/imagen_corporativa/logotipos/
@@ -921,6 +918,3 @@
 
 \end{tikzpicture}%
 }%end def\logoEITFI
-
-% reverting @
-\makeatother
