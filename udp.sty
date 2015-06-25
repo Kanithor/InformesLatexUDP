@@ -29,12 +29,12 @@
 %\definecolor{redudp}{RGB}{222,31,53}%red udp
 
 % Set logo for first page
-\def\@headertext
+\def\@logotext
 \def\@logo{}
 \newcommand{\@setlogo}[1]{\def\@logo{%
 \begin{minipage}{\@logosz}
 #1\\%
-\tiny \textbf{\@headertext}
+\tiny \textbf{\@logotext}
 \end{minipage}%
 }}
 \newcommand{\getlogo}{\@logo}% return the logo
@@ -55,7 +55,7 @@
   \@setat% changes @ dynamically
   \input{logos/#2.logo}
   \@unsetat% reverts @
-  \@setlogotikz{\csname @logo#2\endcsname}\def\@headertext{#1}}
+  \@setlogotikz{\csname @logo#2\endcsname}\def\@logotext{#1}}
 
 % default logo
 \setlogo{FI}
