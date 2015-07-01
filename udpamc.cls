@@ -77,13 +77,13 @@
 \def\nac{\AMC@loc@none}
 
 % patch the question beginning (question sheet)
-\def\AMCbeginQuestion#1#2{\par\noindent{\bf #1.} #2}
+\def\AMCbeginQuestion#1#2{\vspace{\AMCformVSpace}\par\noindent{\bf #1.} #2}
 % patch the question beginning (form answer)
 \def\AMCformQuestion#1{\vspace{\AMCformVSpace}\par{\bf Pregunta \makebox[1.5em][l]{#1:}}}
 % patch the space before every question
 \def\AMCbeforeQuestion{\vspace{\AMCformVSpace}\par}
 % patch indent on the elements
-\AtBeginEnvironment{element}{\noindent}
+\patchcmd{\element}{{#2}}{{\par#2}}{}{}
 
 % patch space
 \AMCinterBquest=1.5ex
@@ -112,23 +112,23 @@
   \AMCcodeVspace=\oldAMCvspace
   \begin{minipage}[b]{6.5cm}
   $\longleftarrow{}$ Marque su RUT sin c\'odigo verificador (el n\'umero despu\'es del gui\'on), y escriba sus nombres y apellidos abajo.
-  \vspace{3ex}
-  \hfill\namefield{\fbox{    
+  \vspace{3ex}%
+  \hfill\namefield{\fbox{ % leave one space
       \begin{minipage}{.9\linewidth}
         Nombre(s) y apellido(s):\\\\
         \vspace*{.5cm}\dotfill\\
         \vspace*{.5cm}\dotfill
         \vspace*{1mm}
       \end{minipage}
-    }}\hfill\vspace{1ex}\end{minipage}\hspace*{\fill}
-  }
-  \vspace{10pt}}
+    }}\hfill\vspace{1ex}\end{minipage}\hspace*{\fill}%
+  }%
+  \vspace{10pt}}%
   % setup depending number of columns
-  \if@twocolumn
-    \twocolumn[\@myhead]
-  \else
-    \@myhead
-  \fi
+  \if@twocolumn%
+    \twocolumn[\@myhead]%
+  \else%
+    \@myhead%
+  \fi%
 }
 
 % Header with instructions alone
@@ -144,19 +144,19 @@
   \ifdefempty{\@instructions}{}{\noindent\textbf{Instrucciones.} \@instructions}
   \vspace{10pt}\\}%<- this enter is needed
   % setup depending number of columns
-  \if@twocolumn
-    \twocolumn[\@myhead]
-  \else
-    \@myhead
-  \fi
+  \if@twocolumn%
+    \twocolumn[\@myhead]%
+  \else%
+    \@myhead%
+  \fi%
 }
 
 % patch the onecopy to reset automatically figures and tables
 \let\oldonecopy\onecopy
 \renewcommand{\onecopy}[2]{\oldonecopy{#1}{%
   % reset
-  \setcounter{figure}{0}
-  \setcounter{table}{0}
+  \setcounter{figure}{0}%
+  \setcounter{table}{0}%
   % content
   #2%
 }}
@@ -175,8 +175,15 @@
 {}{}
 
 % macro to draw marks in instructions
-\newcommand{\emptybox}{\AMC@answerBox@{}{}{}{}}
-\newcommand{\fillbox}{\AMC@answerBox@{}{1}{}{}}
+\newcommand{\@AMC@answer@box}[4]{%
+\ifcsname AMC@answerBox@\endcsname% manage new version
+    \AMC@answerBox@{#1}{#2}{#3}{#4}%
+  \else% manage old version
+    \AMC@boxedchar{#1}{#4}{#3}{#2}%
+  \fi%
+}
+\newcommand{\emptybox}{\@AMC@answer@box{}{}{}{}}
+\newcommand{\fillbox}{\@AMC@answer@box{}{1}{}{}}
 
 
 % Add functionality to hold boxes
