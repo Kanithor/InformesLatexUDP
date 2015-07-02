@@ -111,7 +111,7 @@
   \AMCcodeHspace=\oldAMChspace
   \AMCcodeVspace=\oldAMCvspace
   \begin{minipage}[b]{6.5cm}
-  $\longleftarrow{}$ Marque su RUT sin c\'odigo verificador (el n\'umero despu\'es del gui\'on), y escriba sus nombres y apellidos abajo.
+  $\longleftarrow{}$ Marque su RUT sin d\'igito verificador (el n\'umero despu\'es del gui\'on), y escriba sus nombres y apellidos abajo.
   \vspace{3ex}%
   \hfill\namefield{\fbox{ % leave one space
       \begin{minipage}{.9\linewidth}
