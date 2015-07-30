@@ -90,6 +90,9 @@
 % Set the spanish system (ironically, the comments are in english, but.. who cares)
 \RequirePackage{udpspanish}
 
+% Set the captions
+\RequirePackage[font=footnotesize, labelfont=bf, labelsep=period]{caption}
+
 \RequirePackage{hyperref}
 \RequirePackage{cleveref}
 
