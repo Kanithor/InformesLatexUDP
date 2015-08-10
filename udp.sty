@@ -31,9 +31,9 @@
 % Set logo for first page
 \def\@logotext
 \def\@logo{}
-\newcommand{\@setlogo}[1]{\def\@logo{%
+\newcommand{\@setlogo}{\def\@logo{%
 \begin{minipage}{\@logosz}
-#1\\%
+\resizebox{\@logosz}{!}{\@logoholder}\\%
 \tiny \textbf{\@logotext}
 \end{minipage}%
 }}
@@ -45,7 +45,7 @@
 \let\logosz\setlogosz
 
 % Setters for the logos
-\newcommand\@setlogotikz[1]{\@setlogo{\resizebox{\@logosz}{!}{#1}}}
+\def\@logoholder{}
 
 % We need to create the logos like \setlogo{EIT}, \setlogo{EITFI}
 % We can also pass the header below the logo if needed
@@ -55,7 +55,8 @@
   \@setat% changes @ dynamically
   \input{logos/#2.logo}
   \@unsetat% reverts @
-  \@setlogotikz{\csname @logo#2\endcsname}\def\@logotext{#1}}
+  \expandafter\let\expandafter\@logoholder\csname @logo#2\endcsname%
+  \def\@logotext{#1}}
 
 % default logo
-\setlogo{FI}
+\setlogo{UDP}
