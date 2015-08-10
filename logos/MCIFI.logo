@@ -3,10 +3,10 @@
 
 % These logos were generated using http://code.google.com/p/inkscape2tikz/
 % And the AI files was taken from http://www.intranet.udp.cl/index.php/imagen_corporativa/logotipos/
-\providecommand{\@logoMCIFI}{%
+\providecommand{\@logoMCIFI}[1][grayudp]{%
 \begin{tikzpicture}[y=0.80pt, x=0.80pt, yscale=-1.000000, xscale=1.000000, inner sep=0pt, outer sep=0pt]
 \begin{scope}[cm={{1.25,0.0,0.0,-1.25,(0.0,268.75)}}]
-  \begin{scope}[cm={{1.0,0.0,0.0,-1.0,(40.5557,34.2852)}},fill=grayudp,nonzero rule]
+  \begin{scope}[cm={{1.0,0.0,0.0,-1.0,(40.5557,34.2852)}},fill=#1,nonzero rule]
     \path[fill] (2.3280,-0.4560) .. controls (2.3280,-0.2160) and (2.5200,0.0000) ..
       (2.7840,0.0000) -- (4.3440,0.0000) .. controls (4.5840,0.0000) and
       (4.8000,-0.2160) .. (4.8000,-0.4560) -- (4.8000,-6.7680) -- (11.2080,-6.7680)
@@ -269,7 +269,7 @@
           (11.8880,21.9080) and (9.7880,28.7290) .. (9.7880,34.0270) .. controls
           (9.7880,39.2460) and (12.2480,45.9220) .. (18.4930,45.9220);
       \end{scope}
-  \begin{scope}[cm={{0.99999,0.0,0.0,-1.0,(166.8251,137.7822)}},fill=grayudp,nonzero rule]
+  \begin{scope}[cm={{0.99999,0.0,0.0,-1.0,(166.8251,137.7822)}},fill=#1,nonzero rule]
     \path[fill] (2.5545,-1.1991) .. controls (2.4502,-0.4692) and (2.8152,0.0000) ..
       (3.5450,0.0000) -- (6.9337,0.0000) .. controls (7.3507,0.0000) and
       (7.8199,-0.3649) .. (7.8721,-0.7299) -- (11.6256,-24.0332) .. controls
