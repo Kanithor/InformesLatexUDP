@@ -24,7 +24,7 @@
 
 
 % Page layout
-\RequirePackage[left=2.5cm,right=2.5cm,top=2cm,bottom=2cm]{geometry}
+\RequirePackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2cm]{geometry}
 
 % For using the empty verification
 \RequirePackage{etoolbox}
@@ -38,6 +38,7 @@
 \fancyhead[L]{\@myheader}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{50pt}
 }
 \fancypagestyle{followingpage}{
 %
@@ -47,6 +48,7 @@
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.7pt}
 \renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{15pt}
 }
 \pagestyle{followingpage}
 \AtBeginDocument{\thispagestyle{firstpage}}
@@ -89,6 +91,9 @@
 
 % Set the spanish system (ironically, the comments are in english, but.. who cares)
 \RequirePackage{udpspanish}
+
+% Set the captions
+\RequirePackage[font=footnotesize, labelfont=bf, labelsep=period]{caption}
 
 \RequirePackage{hyperref}
 \RequirePackage{cleveref}
