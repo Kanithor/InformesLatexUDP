@@ -49,11 +49,13 @@
 
 % We need to create the logos like \setlogo{EIT}, \setlogo{EITFI}
 % We can also pass the header below the logo if needed
+\RequirePackage{etoolbox}
 \newcommand\setlogo[2][]{%
   % we load the logo from their respective file 
   % this factorization allows to add new logos without changing this code
   \@setat% changes @ dynamically
-  \input{logos/#2.logo}
+  \ifcsdef{@logo#2}{}%
+  {\input{logos/#2.logo}}% if not defined, load it
   \@unsetat% reverts @
   % sets the logholder for extra use
   \expandafter\let\expandafter\@logoholder\csname @logo#2\endcsname%
