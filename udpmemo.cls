@@ -76,7 +76,7 @@
 \renewcommand{\maketitle}{\makememotitle}
 \newcommand\makememotitle{
   \ifthenelse{\equal{\@memologo}{\relax}}{}
-  { % Create With Logo
+  {% Create With Logo
   \begin{minipage}[t]{1\columnwidth}%
     \begin{flushright}
       \vspace{-0.6in}
