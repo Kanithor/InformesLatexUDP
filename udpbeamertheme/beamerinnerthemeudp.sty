@@ -30,13 +30,14 @@
 \defbeamertemplate*{title page}{udp}[1][]
 {%
   %do the title page
-  \vskip0.5cm%
-  \begin{minipage}[r]{\linewidth}%
+  \vspace*{-15pt}% move the logo up and to the right
+  \begin{minipage}[r]{1.05\linewidth}%
     \begin{flushright}
       \resizebox{4cm}{!}{\@logoholder[white]}
     \end{flushright}
   \end{minipage}%
-  \vskip0.5cm%
+%  \vskip0.5cm%
+  \vfill
 %  \fbox{%
   \begin{minipage}[c][2.5cm][c]{\linewidth}%
     \begin{beamercolorbox}[wd=\the\paperwidth,sep=8pt,#1]{title page header}
