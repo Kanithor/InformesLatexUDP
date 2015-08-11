@@ -32,9 +32,9 @@
 \def\@logotext
 \def\@logo{}
 \newcommand{\@setlogo}{\def\@logo{%
-\begin{minipage}{\@logosz}
+\begin{minipage}{\@logosz}%
 \resizebox{\@logosz}{!}{\@logoholder}\\%
-\tiny \textbf{\@logotext}
+\tiny \textbf{\@logotext}%
 \end{minipage}%
 }}
 \newcommand{\getlogo}{\@logo}% return the logo
@@ -55,7 +55,10 @@
   \@setat% changes @ dynamically
   \input{logos/#2.logo}
   \@unsetat% reverts @
+  % sets the logholder for extra use
   \expandafter\let\expandafter\@logoholder\csname @logo#2\endcsname%
+  % sets the logo
+  \@setlogo%
   \def\@logotext{#1}}
 
 % default logo
