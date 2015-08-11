@@ -134,3 +134,6 @@
 \RequirePackage{xspace}
 \DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
 \newcommand\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+% Style of page without numbers
+\pagestyle{empty}
