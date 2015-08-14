@@ -31,24 +31,19 @@
 
 % Headers and footers
 \RequirePackage{fancyhdr}
-\fancypagestyle{firstpage}{
-%
-\fancyhf{}
-% clear all six fields
-\fancyhead[L]{\@myheader}
+
+\fancypagestyle{firstpage}{%
+\fancyhf{}%
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
-\setlength{\headheight}{50pt}
 }
-\fancypagestyle{followingpage}{
-%
+\fancypagestyle{followingpage}{%
 \fancyhf{}
 % clear all six fields
 \fancyhead[L]{\@headertext}
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.7pt}
 \renewcommand{\footrulewidth}{0pt}
-\setlength{\headheight}{15pt}
 }
 \pagestyle{followingpage}
 \AtBeginDocument{\thispagestyle{firstpage}}
@@ -66,13 +61,16 @@
 \let\headertext\setheadertext
 
 \def\@myheader{%
-\getlogo
+\getlogo%
 }%end \@myheader
 
 % Re-define the title
 \def\@maketitle{%
-  \newpage
-%  \vspace*{-\topskip}      % remove the initial space
+  \vspace*{-50pt}
+  \begin{flushleft}%
+  \@myheader%
+  \end{flushleft}%
+%  \vspace*{-\topskip}     % remove the initial space
   \begingroup\centering    % instead of \begin{center}
   \let \footnote \thanks
   \hrule height \z@        % to avoid the insertion of lineskip glue
