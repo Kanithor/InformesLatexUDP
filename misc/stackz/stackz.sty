@@ -259,7 +259,7 @@ decorations.pathreplacing,%
     cell/.style={freecell},
     #1}
   \setcounter{cellnb}{0}
-  \draw (0,0) node[textcell](\@cur@cell) {...};
+  \draw (0,0) node[textcell, /stackz/cell, alias=\@cell@alias](\@cur@cell) {...};
   \begin{pgfonlayer}{background layer}
     \draw[/stackz/cell] (\@cur@cell.north west) -- (\@cur@cell.south west) -- (\@cur@cell.south east) -- (\@cur@cell.north east);
   \end{pgfonlayer}
