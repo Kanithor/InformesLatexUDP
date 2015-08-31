@@ -74,6 +74,7 @@
 
 % patch the definition of NAC in the spanish toolbox
 \AMCtext{none}{Ninguna de estas respuestas es correcta.}
+\AMCtext{explain}{\textit{\textbf{Explicación: }}}
 \def\nac{\AMC@loc@none}
 
 % patch the question beginning (question sheet)
