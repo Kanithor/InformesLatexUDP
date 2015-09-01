@@ -20,6 +20,8 @@
 % ---
 \LoadClass{exam}
 
+\RequirePackage{calc}
+
 % UDP logos and other internal stuff
 \RequirePackage{udp}
 
@@ -33,20 +35,59 @@
 % professors/instructors
 \def\@instructors{}
 \newcommand{\instructors}[1]{\def\@instructors{#1}}
+\def\@instructor{}
+\newcommand{\instructor}[1]{\def\@instructor{#1}}
 % name of the course
 \def\@title{}
 \renewcommand{\title}[1]{\def\@title{#1}}
 
+\def\@nametext{}
+\newcommand{\nametext}[1]{\def\@nametext{#1}}
+\nametext{Nombre:}
+
+\def\@idtext{}
+\newcommand{\idtext}[1]{\def\@idtext{#1}}
+\idtext{RUT:}
+
+\def\@sectiontext{}
+\newcommand{\sectiontext}[1]{\def\@sectiontext{#1}}
+\sectiontext{Sección:}
+
+\newif\ifsectiontext
+\sectiontextfalse
+
 % % Style
 \pagestyle{headandfoot}
 \header{\@logo}{\vfil\@title\vfil}{\vfil\@coursecode\vfil}
-\footer{\ifdefempty{\@instructors}{}{Profesor(es): \@instructors}}{}{\thepage}
+\footer{%
+  \ifdefempty{\@instructors}{%
+    \ifdefempty{\@instructor}{}{%
+      Profesor: \@instructor%
+    }%
+  }{%
+    Profesores: \@instructors%
+  }%
+}{}{\thepage}
 
 % Name and section commands
 \RequirePackage{xparse}
 \newcommand{\name}[1][\textwidth]{\hbox to #1{Nombre:\enspace\hrulefill}\vspace{0.2 in}}
-% Uses two optional arguments to define the size of name and section
-\DeclareDocumentCommand{\makename}{O{0.7\textwidth} O{0.29\textwidth}}{\hbox{\hbox to #1{Nombre:\enspace\hrulefill} \hbox to #2{Sección:\enspace\hrulefill}}\vspace{0.2 in}}
+
+% Uses three optional arguments to define the size of name, id, and section
+\DeclareDocumentCommand{\makename}{O{0.5\textwidth} O{0.24\textwidth} O{0.24\textwidth}}{%
+\hbox{%
+\ifsectiontext%
+  \hbox to #1{\@nametext\enspace\hrulefill}
+  \hbox to #2{\@idtext\enspace\hrulefill}\vspace{0.2 in}
+  \hbox to #3{\@sectiontext\enspace\hrulefill}\vspace{0.2 in}
+\else%
+  \newlength\len%
+  \setlength{\len}{#1+#3}%
+  \hbox to \len{\@nametext\enspace\hrulefill} 
+  \hbox to #2{\@idtext\enspace\hrulefill}\vspace{0.2 in}
+\fi%
+}%
+}
 
 % Re-define the title
 \def\maketitle{%
@@ -104,7 +145,7 @@ literate=%
       \begingroup
       \Solution@Emphasis
       \begin{TheSolution}%
-      \lstset{ %
+      \lstset{%
         frame=none
       }
     \else
