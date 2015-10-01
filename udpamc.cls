@@ -183,8 +183,8 @@
     \AMC@boxedchar{#1}{#4}{#3}{#2}%
   \fi%
 }
-\newcommand{\emptybox}{\@AMC@answer@box{}{}{}{}}
-\newcommand{\fillbox}{\@AMC@answer@box{}{1}{}{}}
+\newcommand{\emptybox}{\raisebox{-.2ex}{\@AMC@answer@box{}{}{}{}}}
+\newcommand{\fillbox}{\raisebox{-.2ex}{\@AMC@answer@box{}{1}{}{}}}
 
 
 % Add functionality to hold boxes
@@ -210,3 +210,12 @@
   {\expandafter\usebox\csname foobox\roman{myboxcounter}\endcsname}%
   {\expandafter\usebox\csname foobox#1\endcsname}%
 }
+
+% Add functionality for group of questions
+\newcommand{\groupopen}{$\triangleright$}
+\newcommand{\groupclose}{$\triangleleft$}
+\newcommand{\groupelement}[2]{%
+\element{#1}{%
+\groupopen
+#2
+\groupclose}}
