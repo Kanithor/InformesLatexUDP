@@ -216,6 +216,5 @@
 \newcommand{\groupclose}{$\triangleleft$}
 \newcommand{\groupelement}[2]{%
 \element{#1}{%
-\groupopen
-#2
-\groupclose}}
+\noindent\groupopen\hspace{.8ex}
+#2\groupclose}}
