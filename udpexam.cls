@@ -115,6 +115,8 @@
 \pointpoints{punto}{puntos}
 \renewcommand{\solutiontitle}{\noindent\textbf{Solución:}\enspace}
 
+\totalformat{Total para Pregunta~\thequestion: (\totalpoints)}
+
 \RequirePackage{listings}
 \RequirePackage{bold-extra}%enabled ttfamily bold fonts 
 
