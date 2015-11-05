@@ -115,7 +115,19 @@
 \pointpoints{punto}{puntos}
 \renewcommand{\solutiontitle}{\noindent\textbf{Solución:}\enspace}
 
+% droppoints
 \totalformat{Total para Pregunta~\thequestion: (\totalpoints)}
+
+% grade table
+\vqword{Pregunta}
+\vpgword{Página}
+\vpword{Puntos}
+\vsword{Nota}
+
+\hqword{Pregunta}
+\hpgword{Página}
+\hpword{Puntos}
+\hsword{Nota}
 
 \RequirePackage{listings}
 \RequirePackage{bold-extra}%enabled ttfamily bold fonts 
@@ -140,31 +152,3 @@ literate=%
     {ñ}{{\~{n}}}1
     {Ñ}{{\~{N}}}1
 }
-
-\renewenvironment{solution}[1][0pt]%
-  {%
-    \ifprintanswers
-      \begingroup
-      \Solution@Emphasis
-      \begin{TheSolution}%
-      \lstset{%
-        frame=none
-      }
-    \else
-      \ifcancelspace
-        % Do nothing
-      \else
-        \par
-        \penalty 0
-        \vspace*{#1}%
-      \fi
-      \setbox\z@\vbox\bgroup
-    \fi
-  }{%
-    \ifprintanswers
-      \end{TheSolution}%
-      \endgroup
-    \else
-      \egroup
-    \fi
-  }%
