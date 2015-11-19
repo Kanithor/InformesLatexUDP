@@ -274,4 +274,5 @@
 \newcommand{\groupelement}[2]{%
 \element{#1}{%
 \noindent\groupopen\hspace{.8ex}
-#2\groupclose}}
+#2 %<- the enter is needed (i.e., the space) in order to force a new line
+\groupclose}}
