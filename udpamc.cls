@@ -48,6 +48,7 @@
 
 % for patching
 \RequirePackage{etoolbox}
+\RequirePackage{regexpatch}
 
 % for logos
 \RequirePackage{udp}
@@ -88,6 +89,62 @@
 
 % patch space
 \AMCinterBquest=1.5ex
+% patch AMCOpen white space after
+\renewcommand\AMCopenShow[4]{
+  \ifAMC@ensemble\def\AMCid@name{#3}\AMCid@quest=#4\fi%
+  \ifAMC@ensemble\ifAMCformulaire@dedans%
+    \AMC@amclog{AUTOQCM[Q=\the\AMCid@quest]^^J}%
+  \fi\fi%
+  {\setkeys{AMCOpen}{#1}%
+    \ifKV@AMCOpen@lineup%
+      \ifAMC@ensemble\else\par\fi%
+      \ifAMC@correc\smash{\AMCopen@answer}\fi\dotfill%
+    \else%
+      \hspace*{.5em}\linebreak[1]\hspace*{\fill}%
+    \fi%
+    {\AMCnoCompleteMulti%
+      \def\AMCbeginAnswer{}\def\AMCendAnswer{}%
+      \def\AMCanswer##1##2{\ifAMC@ensemble ##1\else%
+          \ifAMC@inside@box ##1\else{\AMCboxOutsideLetter{##1}{##2}}\fi\fi%
+        \hspace{\AMCopen@Hspace}}%
+      \fboxsep=\AMCopen@boxmargin%
+      \fboxrule=\AMCopen@boxframerule%
+      \fcolorbox{\AMCocol@BoxFrameRule}{\AMCocol@Background}{%
+        \ifAMC@ensemble\AMCopen@question%
+          \ifx\@empty\AMCopen@question\@empty\else\hspace{\AMCopen@Hspace}\fi%
+        \fi%
+        \begin{choicescustom}[o]%
+          \ifx\AMCocol@Foreground\@empty\@empty\else%
+            \def\AMC@boxcolor{\AMCocol@Foreground}%
+          \fi%
+          #2%
+          \ifKV@AMCOpen@scan\else\AMCdontScan\fi%
+          \ifKV@AMCOpen@annotate\else\AMCdontAnnotate\fi%
+        \end{choicescustom}%
+        \ifx\@empty\AMCotextReserved\@empty%
+          \hspace{-\AMCopen@Hspace}%
+        \else%
+          \ifx\AMCocol@Foreground\@empty\@empty%
+            \AMCotextReserved%
+          \else%
+            \textcolor{\AMCocol@Foreground}{\AMCotextReserved}%
+          \fi%
+        \fi%
+      }}%
+    \ifKV@AMCOpen@lineup\else%
+      \par\nobreak\noindent%
+      \hspace*{\fill}{%
+        \fboxrule=\AMCopen@framerule%
+        \fcolorbox{\AMCocol@FrameRule}{white}{%
+          \csname\AMCopen@contentcommand\endcsname
+        }}%
+      \vspace{0mm}\par%
+    \fi%
+  }%
+  \ifAMC@ensemble\ifAMCformulaire@dedans%
+  \AMC@amclog{AUTOQCM[FQ]^^J}%
+  \fi\fi%
+}
 
 % creates the header for the automultichoice
 \newcommand{\makename}{%
