@@ -249,7 +249,11 @@
 % patch AMCOpen to hide boxes on solutions
 \let\oldAMCopenShow\AMCopenShow
 \renewcommand{\AMCopenShow}[4]{%
-\oldAMCopenShow{#1, lines=0,lineheight=0pt,dots=false,framerulecol=white}{#2}{#3}{#4}
+\ifsolutions%
+  \oldAMCopenShow{#1, lines=0,lineheight=0pt,dots=false,framerulecol=white}{#2}{#3}{#4}%
+\else%
+  \oldAMCopenShow{#1}{#2}{#3}{#4}%
+\fi%
 }
 
 % Add functionality to hold boxes
