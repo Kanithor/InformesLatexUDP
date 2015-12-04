@@ -243,7 +243,6 @@
 \newcommand{\emptybox}{\raisebox{-.2ex}{\@AMC@answer@box{}{}{}{}}}
 \newcommand{\fillbox}{\raisebox{-.2ex}{\@AMC@answer@box{}{1}{}{}}}
 
-
 % Add functionality to hold boxes
 % http://tex.stackexchange.com/q/195005/7561
 % Mi código para generar cajas para código automaticamente
@@ -276,3 +275,122 @@
 \noindent\groupopen\hspace{.8ex}
 #2 %<- the enter is needed (i.e., the space) in order to force a new line
 \groupclose}}
+
+% Table question
+\newdimen\@AMCtableL
+\newdimen\@AMCtableTextL
+\newdimen\@AMCtableC
+\newdimen\@AMCtableCh
+\newcount\@AMCtableI
+\newcount\@AMCtableColNum
+\newcount\@AMColdCount
+% whether each answer should have more than one correct answer
+\newbool{@AMCusemultianswer}% \newif\if@AMCusemultianswer equivalent
+% whether we should use the number of options given as answers to convert the question to multiple answer one
+\newbool{@AMCuseoptionsnumbers}% \newif\if@AMCuseoptionsnumber equivalent
+\newbool{@multiques}
+\newbool{@multioptions}
+\pgfkeys{%
+  table width/.default=\linewidth,
+  table width/.code={\@AMCtableL=#1},
+  left text width/.code={\@AMCtableTextL=#1},
+  left text width/.default=-1000pt,
+  set text width/.code={\ifdim\@AMCtableTextL=-1000pt \@AMCtableTextL=\dimexpr\@AMCtableL-\@AMCtableColNum\@AMCtableC\relax\fi},
+  num columns/.default=1,
+  num columns/.code={\@AMCtableColNum #1\relax},
+  column width/.default=1cm,
+  column width/.code={\@AMCtableC=#1},
+  column height/.default=1.1em,
+  column height/.code={\@AMCtableCh=#1},
+  table header/.code={\def\makeheader{%
+    \par\noindent
+    \parbox[c][\@AMCtableCh]{\@AMCtableL}{\colorbox{white}{#1}}
+    \par}},
+  table header/.initial=,
+  score/.default=1,
+  score/.store in=\@AMCrowChoiceScore,
+  use multi answer/.default=true,
+  use multi answer/.is if=@AMCusemultianswer,
+  use options number/.default=true,
+  use options number/.is if=@AMCuseoptionsnumbers,
+}
+
+\newif\ifadded
+% #1 pgfkeys options (optional)
+% #2 range of options to turn on
+% #3 max number of options to create
+\newcommand{\AMCrowchoices}[3][]{%
+  \pgfkeys{#1}%
+  \def\@@tmp{}%
+  \foreach \i in {0,...,\numexpr#3-1\relax}{%
+    \global\addedfalse%
+    \foreach \j in #2{%
+      \ifnum\i=\j%
+        % using \n from onerow macro
+        \xappto\@@tmp{\noexpand\correctchoice{\i}\if@multiques\noexpand\scoring{b=\@AMCrowChoiceScore,m=0}\fi}%
+        \global\addedtrue%
+      \fi%
+    }%
+    \ifadded\else%
+       \xappto\@@tmp{\noexpand\wrongchoice{\i}\if@multiques\noexpand\scoring{m=0,b=0}\fi}%
+    \fi%
+  }%
+\@@tmp%
+}
+
+\newenvironment{amctable}[1][]{%
+  \pgfkeys{table width, num columns, column width, column height, score, left text width, use options number, #1, set text width}
+  \let\oldAMCbeginAnswer\AMCbeginAnswer%
+  \def\AMCbeginAnswer{}%
+  \let\oldAMCendAnswer\AMCendAnswer%
+  \def\AMCendAnswer{}%
+  \let\oldAMCanswer\AMCanswer%
+  \def\AMCanswer##1##2{\AMCtableCol{##1}}%
+  \let\oldAMCbeginQuestion\AMCbeginQuestion%
+%  % set questions number
+%  \AMC@stepQuestion%
+%  % typeset the number
+%  \oldAMCbeginQuestion{\AMC@qaff}{}%
+  \@AMColdCount=\theAMCquestionaff\relax%
+  \def\AMCbeginQuestion##1##2{\par\noindent}%
+  \global\@AMCtableI=0%
+}{%
+  \let\AMCbeginAnswer\oldAMCbeginAnswer%
+  \let\AMCendAnswer\oldAMCendAnswer%
+  \let\AMCanswer\oldAMCanswer%
+  \let\AMCbeginQuestion\oldAMCbeginQuestion%
+  \setcounter{AMCquestionaff}{\@AMColdCount}%
+}
+
+\newcommand{\AMCtableLeft}[1]{\noindent\parbox[c][\@AMCtableCh]{\@AMCtableTextL}{#1}}
+\newcommand{\AMCtableCol}[1]{\parbox[c][\@AMCtableCh]{\@AMCtableC}{\centering\scriptsize #1}}
+
+\newcommand{\oneitem}[4][]{%
+  \pgfkeys{#1}%
+  \global\advance\@AMCtableI by 1%
+  \ifodd\@AMCtableI%
+    \global\def\AMCtableColor{gray!25}%
+  \else%
+    \global\def\AMCtableColor{white}%
+  \fi%
+  \par\noindent\colorbox{\AMCtableColor}{\parbox[c][\@AMCtableCh]{\@AMCtableL}{%
+  \foreach \i [count=\n] in #4{}%
+  \ifnum\n>1 \booltrue{@multioptions}\else\boolfalse{@multioptions}\fi%
+  \ifboolexpr{bool{@AMCusemultianswer} and ( not bool{@AMCuseoptionsnumbers} or bool{@multioptions} )}{\booltrue{@multiques}}{\boolfalse{@multiques}}%
+  \def\content{%
+    \AMCtableLeft{#3}%
+    \begin{choicescustom}[o]
+      \scoring{%
+        v=0,% v: non answers (blank), e: incoherent (many checked)
+        \if@multiques b=0\else b=\@AMCrowChoiceScore, e=0, m=0\fi%
+      }%
+      \AMCrowchoices[#1]{#4}{\@AMCtableColNum}%
+    \end{choicescustom}%
+  }%
+  \ifbool{@multiques}{%
+     \begin{questionmult}{#2}\content\end{questionmult}%
+  }{%
+    \begin{question}{#2}\content\end{question}%
+  }%
+  }}%
+}
