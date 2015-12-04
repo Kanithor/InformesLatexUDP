@@ -243,6 +243,15 @@
 \newcommand{\emptybox}{\raisebox{-.2ex}{\@AMC@answer@box{}{}{}{}}}
 \newcommand{\fillbox}{\raisebox{-.2ex}{\@AMC@answer@box{}{1}{}{}}}
 
+% macro for changing form on solutions
+\let\ifsolutions\ifAMC@correchead
+
+% patch AMCOpen to hide boxes on solutions
+\let\oldAMCopenShow\AMCopenShow
+\renewcommand{\AMCopenShow}[4]{%
+\oldAMCopenShow{#1, lines=0,lineheight=0pt,dots=false,framerulecol=white}{#2}{#3}{#4}
+}
+
 % Add functionality to hold boxes
 % http://tex.stackexchange.com/q/195005/7561
 % Mi código para generar cajas para código automaticamente
