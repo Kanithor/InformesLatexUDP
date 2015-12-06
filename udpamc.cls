@@ -5,42 +5,40 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{udpamc}[\filedate\space\fileversion]
 
-% helper macros (for more automation)
-\newcommand\batchPassOptionsToClass[2]
-{%
-  \edef\@tempa{#1} % option list
-  \@for\@tempb:=\@tempa\do{
-    \DeclareOption{\@tempb}{\PassOptionsToClass{\CurrentOption}{#2}}
-  }
+\RequirePackage{pgfkeys}
+\RequirePackage{pgfopts}
+\RequirePackage{etoolbox}
+% Package options
+\def\article@classoptions{letter}% list all options that should be passed to article here
+\def\amc@packageoptions{box, lang=ES}% list all default options passed to amc
+
+\newif\ifudpamc@circle%
+\pgfkeys{%
+  /udpamc/.cd,
+  circle/.is if={udpamc@circle},
+  circle/.default=true,
+  article/.code={\edef\article@classoptions{\article@classoptions,#1}},
+  % unknown keys are assumed to be options to be passed to the amc package
+  .unknown/.code={\edef\amc@packageoptions{\amc@packageoptions,\pgfkeyscurrentname=#1}},
 }
 
-\newcommand\batchPassOptionsToPackage[2]
-{%
-  \edef\@tempa{#1}% option list
-  \@for\@tempb:=\@tempa\do{%
-    \DeclareOption{\@tempb}{\PassOptionsToPackage{\CurrentOption}{#2}}%
-  }%
+% defaults
+\pgfkeys{%
+  /udpamc/.cd,
+  circle,
 }
 
-\def\udpamc@opt{}
-\DeclareOption{circle}{% 
-  \gdef\udpamc@opt{\AMCboxDimensions{shape=oval,width=2.5ex,height=2.5ex}}
-}%
+% process options key-value
+\ProcessPgfOptions{/udpamc}
+% process options code
+\ifudpamc@circle%
+  \gdef\udpamc@opt{\AMCboxDimensions{shape=oval,width=2.5ex,height=2.5ex}}%
+\else%
+  \gdef\udpamc@opt{}%
+\fi%
 
-% declare all options that should be passed to article
-\batchPassOptionsToClass
-  {a4paper,legalpaper} % list all options that should be passed to article here
-  {article}
-
-% pass all other options to the automultiplechoice package
-\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{automultiplechoice}}
-% (or use \batchPassOptionsToPackage, if need to pass some options to other packages)
-
-% process options (only once in your class file)
-\ProcessOptions\relax
-
-\LoadClass{article}
-\RequirePackage[box,lang=ES]{automultiplechoice}
+\LoadClass[\article@classoptions]{article}
+\RequirePackage[\amc@packageoptions]{automultiplechoice}
 \RequirePackage{tikz}
 % load my options
 \AtBeginDocument{\udpamc@opt}
@@ -303,6 +301,12 @@
 \newbool{@AMCuseoptionsnumbers}% \newif\if@AMCuseoptionsnumber equivalent
 \newbool{@multiques}
 \newbool{@multioptions}
+
+\def\headerLeft{}
+\def\headerChoices{}
+\newcommand\@makeheader[2]{\par\noindent\begin{minipage}{\@AMCtableL}\colorbox{white}{#1#2}\end{minipage}\par}
+\def\makeheader{\@makeheader{\headerLeft}{\headerChoices}}
+
 \pgfkeys{%
   table width/.default=\linewidth,
   table width/.code={\@AMCtableL=#1},
@@ -315,11 +319,11 @@
   column width/.code={\@AMCtableC=#1},
   column height/.default=1.1em,
   column height/.code={\@AMCtableCh=#1},
-  table header/.code={\def\makeheader{%
-    \par\noindent
-    \parbox[c][\@AMCtableCh]{\@AMCtableL}{\colorbox{white}{#1}}
-    \par}},
-  table header/.initial=,
+  % header of table
+  table header/.code={\global\def\headerChoices{#1}},
+  table header/.default=,
+  table header left text/.code={\global\def\headerLeft{#1}},
+  table header left text={\AMCtableLeft{\hfil}},
   score/.default=1,
   score/.store in=\@AMCrowChoiceScore,
   use multi answer/.default=true,
@@ -328,30 +332,30 @@
   use options number/.is if=@AMCuseoptionsnumbers,
 }
 
-\newif\ifadded
+\newif\if@added
 % #1 pgfkeys options (optional)
 % #2 range of options to turn on
 % #3 max number of options to create
-\newcommand{\AMCrowchoices}[3][]{%
+\newcommand{\@AMCrowchoices}[3][]{%
   \pgfkeys{#1}%
   \def\@@tmp{}%
   \foreach \i in {0,...,\numexpr#3-1\relax}{%
-    \global\addedfalse%
+    \global\@addedfalse%
     \foreach \j in #2{%
       \ifnum\i=\j%
         % using \n from onerow macro
         \xappto\@@tmp{\noexpand\correctchoice{\i}\if@multiques\noexpand\scoring{b=\@AMCrowChoiceScore,m=0}\fi}%
-        \global\addedtrue%
+        \global\@addedtrue%
       \fi%
     }%
-    \ifadded\else%
+    \if@added\else%
        \xappto\@@tmp{\noexpand\wrongchoice{\i}\if@multiques\noexpand\scoring{m=0,b=0}\fi}%
     \fi%
   }%
 \@@tmp%
 }
 
-\newenvironment{amctable}[1][]{%
+\newenvironment{tablequestion}[1][]{%
   \pgfkeys{table width, num columns, column width, column height, score, left text width, use options number, #1, set text width}
   \let\oldAMCbeginAnswer\AMCbeginAnswer%
   \def\AMCbeginAnswer{}%
@@ -360,10 +364,7 @@
   \let\oldAMCanswer\AMCanswer%
   \def\AMCanswer##1##2{\AMCtableCol{##1}}%
   \let\oldAMCbeginQuestion\AMCbeginQuestion%
-%  % set questions number
-%  \AMC@stepQuestion%
-%  % typeset the number
-%  \oldAMCbeginQuestion{\AMC@qaff}{}%
+  
   \@AMColdCount=\theAMCquestionaff\relax%
   \def\AMCbeginQuestion##1##2{\par\noindent}%
   \global\@AMCtableI=0%
@@ -375,10 +376,10 @@
   \setcounter{AMCquestionaff}{\@AMColdCount}%
 }
 
-\newcommand{\AMCtableLeft}[1]{\noindent\parbox[c][\@AMCtableCh]{\@AMCtableTextL}{#1}}
-\newcommand{\AMCtableCol}[1]{\parbox[c][\@AMCtableCh]{\@AMCtableC}{\centering\scriptsize #1}}
+\newcommand{\AMCtableLeft}[1]{\begin{minipage}{\@AMCtableTextL}#1\end{minipage}}
+\newcommand{\AMCtableCol}[1]{\begin{minipage}{\@AMCtableC}\centering\scriptsize #1\end{minipage}}
 
-\newcommand{\oneitem}[4][]{%
+\newcommand{\multiitem}[4][]{%
   \pgfkeys{#1}%
   \global\advance\@AMCtableI by 1%
   \ifodd\@AMCtableI%
@@ -386,24 +387,25 @@
   \else%
     \global\def\AMCtableColor{white}%
   \fi%
-  \par\noindent\colorbox{\AMCtableColor}{\parbox[c][\@AMCtableCh]{\@AMCtableL}{%
-  \foreach \i [count=\n] in #4{}%
-  \ifnum\n>1 \booltrue{@multioptions}\else\boolfalse{@multioptions}\fi%
-  \ifboolexpr{bool{@AMCusemultianswer} and ( not bool{@AMCuseoptionsnumbers} or bool{@multioptions} )}{\booltrue{@multiques}}{\boolfalse{@multiques}}%
-  \def\content{%
-    \AMCtableLeft{#3}%
-    \begin{choicescustom}[o]
-      \scoring{%
-        v=0,% v: non answers (blank), e: incoherent (many checked)
-        \if@multiques b=0\else b=\@AMCrowChoiceScore, e=0, m=0\fi%
-      }%
-      \AMCrowchoices[#1]{#4}{\@AMCtableColNum}%
-    \end{choicescustom}%
+  \par\noindent\begin{minipage}{\@AMCtableL}\colorbox{\AMCtableColor}{%
+    \foreach \i [count=\n] in #4{}%
+    \ifnum\n>1 \booltrue{@multioptions}\else\boolfalse{@multioptions}\fi%
+    \ifboolexpr{bool{@AMCusemultianswer} and ( not bool{@AMCuseoptionsnumbers} or bool{@multioptions} )}{\booltrue{@multiques}}{\boolfalse{@multiques}}%
+    \def\content{%
+      \AMCtableLeft{#3}%
+      \begin{choicescustom}[o]
+        \scoring{%
+          v=0,% v: non answers (blank), e: incoherent (many checked)
+          \if@multiques b=0\else b=\@AMCrowChoiceScore, e=0, m=0\fi%
+        }%
+        \@AMCrowchoices[#1]{#4}{\@AMCtableColNum}%
+      \end{choicescustom}%
+    }%
+    \ifbool{@multiques}{%
+       \begin{questionmult}{#2}\content\end{questionmult}%
+    }{%
+      \begin{question}{#2}\content\end{question}%
+    }%
   }%
-  \ifbool{@multiques}{%
-     \begin{questionmult}{#2}\content\end{questionmult}%
-  }{%
-    \begin{question}{#2}\content\end{question}%
-  }%
-  }}%
+  \end{minipage}
 }
