@@ -67,7 +67,6 @@
   section/.code = {\noitem{\textbf{#1}}},
   type/.initial = multiitem,
   options/.initial =,
-%  question/.code 2 args = {\pgfkeysvalueof{/type}: #1: #2\par},
   question/.code 2 args = {\csname \pgfkeysvalueof{/type}\expandafter\endcsname\expandafter[\expandafter{\romannumeral-`\x\pgfkeysvalueof{/options}}]{#1}{#2}},
   text/.code = {\noitem[is text]{#1}},
   % typeset the header on demand
@@ -82,12 +81,10 @@
   % conditionals
   first header/.is if=firstheader,
   first header/.default=true,
-%  first header/.code={},
   % setters for the table using survey
   first header,
   column width/.default=1.5cm,% use default because the table is set after this set of keys
 }
-
 
 
 % patch the table
@@ -113,55 +110,6 @@
   \let\AMCbeginQuestion\oldAMCbeginQuestion%
   \setcounter{AMCquestionaff}{\@AMColdCount}%
 }
-%\BeforeBeginEnvironment{tablequestion}{\iffirstheader\printHeader\fi}
-
-%\pgfkeys{%/udp/.cd,%
-%first header/.is if=firstheader,
-%first header/.default=true,
-%}
-
-%\def\AMCtableHeaderRight{}
-%\def\AMCtableHeaderLeft{}
-%\newenvironment{amctable}[2][]{%
-%  \pgfkeys{/udp/.cd,first header, #1}%
-%  \def\AMCbeginAnswer{}%
-%  \def\AMCendAnswer{}%
-%  \def\AMCanswer##1##2{\tableCol{##1}}%
-%  \def\AMCbeginQuestion##1##2{\par\noindent}%
-%  \AMCtableBegin{#2}%
-%  \def\AMCtableChoices{\foreach \x in {1,...,#2}{\wrongchoice{\x}}}%
-%  \par\noindent%
-%%  \def\AMCtableHeaderRight{#4}
-%  \iffirstheader%
-%    \AMCtableHeader%
-%  \fi%
-%}{}
-%
-%\newdimen\AMCtableL
-%\newdimen\AMCtableC\AMCtableC=1.5cm
-%\newcount\@AMCtableI
-%\newcommand{\AMCtableBegin}[1]{%
-%  \global\AMCtableL=\textwidth%
-%%%  \global\addtolength{\AMCtableL}{-2em}%
-%  \global\addtolength{\AMCtableL}{-#1\AMCtableC}%
-%  \global\@AMCtableI=0%
-%}
-%\newcommand{\tableLeft}[1]{\noindent\parbox{\AMCtableL}{#1}}
-%\newcommand{\tableCol}[1]{\parbox{\AMCtableC}{\centering\scriptsize #1}}
-
-%\newcommand{\oneitem}[3][]{%
-%  \global\advance\@AMCtableI by 1%
-%  \ifodd\@AMCtableI%
-%    \global\def\tableColor{gray!25}%
-%  \else%
-%    \global\def\tableColor{white}%
-%  \fi%
-%  \par\noindent\colorbox{\tableColor}{\begin{question}{#2}\noindent\tableLeft{#3}%
-%    \begin{choicescustom}[o]\QuestionIndicative\scoring{auto=1, v=0, e=0}% v: non answers (blank), e: incoherent (many checked)
-%      \AMCtableChoices%
-%    \end{choicescustom}%
-%  \end{question}}%
-%}
 
 \renewcommand{\AMCtableLeft}[1]{\noindent\parbox{\@AMCtableTextL}{#1}}
 \renewcommand{\AMCtableCol}[1]{\parbox{\@AMCtableC}{\centering\scriptsize #1}}
