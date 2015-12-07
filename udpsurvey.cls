@@ -11,27 +11,25 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{udpsurvey}[\filedate\space\fileversion]
 
-% helper macros (for more automation)
-\def\batchPassOptionsToClass#1#2{%
-  \edef\@tempa{#1} % option list
-  \@for\@tempb:=\@tempa\do{
-    \DeclareOption{\@tempb}{\PassOptionsToClass{\CurrentOption}{#2}}
-  }
+\RequirePackage{pgfkeys}
+\RequirePackage{pgfopts}
+
+\def\udpamc@classoptions{noshuffle, circle}
+\pgfkeys{%
+  /udpsurvey/.cd,
+  % unknown keys are assumed to be options to be passed to the amc package
+  .unknown/.code={\edef\udpamc@classoptions{\udpamc@classoptions,\pgfkeyscurrentname=#1}},
 }
 
-\def\batchPassOptionsToPackage#1#2{%
-  \edef\@tempa{#1}% option list
-  \@for\@tempb:=\@tempa\do{%
-    \DeclareOption{\@tempb}{\PassOptionsToPackage{\CurrentOption}{#2}}%
-  }%
+% defaults
+\pgfkeys{%
+  /udpsurvey/.cd,
 }
 
-\batchPassOptionsToPackage{noshuffle, circle}{udpamc}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{udpamc}}
-% process options (only once in your class file)
-\ProcessOptions\relax
+% process options key-value
+\ProcessPgfOptions{/udpsurvey}
 
-\LoadClass{udpamc}
+\LoadClass[\udpamc@classoptions]{udpamc}
 
 
 \RequirePackage{pgffor,pgfkeys}
