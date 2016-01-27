@@ -8,6 +8,7 @@ Se provee de las siguientes tipos de documentos:
 - Memo (`udpmemo`): Memos gneerales con logos institucionales, y generación de listas de copia automática.
 - Exámenes (`udpexam`): Exámenes de preguntas abiertas. Permite generar paútas al escribir las respuestas dentro. Extiende a `exam` de LaTeX.
 - Exámenes de opción múltiple (`udpamc`): Exámenes de opción múltiple. Permite generar preguntas de manera aleatoria, 
+- Encuestas de opción múltiple (`udpsurvey`): Encuestas de opción múltiple en forma de tabla. Extiende la funcionalidad de `udpamc` para la generación de encuestas.
 - Programas (`udpsyllabus`): Programas de cursos con generación de encabezados automática.
 
 # Instalación
@@ -18,7 +19,7 @@ Los archivos de las distintas clases y estilos deben de desplegarse en un direct
 
 ## `udparticle.cls`
 
-Esta clase es utilizada para generar artículos que incluyan el logo y formato de la UDP. La información del encabezado (título, autores, emails, etc.) se genera al inicio de la página de manera compacta, dando lugar al contenido inmediatamente.
+La clase `udparticle.cls` es utilizada para generar artículos que incluyan el logo y formato de la UDP. La información del encabezado (título, autores, emails, etc.) se genera al inicio de la página de manera compacta, dando lugar al contenido inmediatamente.
 
 ```latex
 \documentclass{udparticle}
@@ -48,7 +49,7 @@ Esta clase es utilizada para generar artículos que incluyan el logo y formato d
 
 ## `udpreport.cls`
 
-Esta clase es utilizada para generar documentos con mayor contenido que un artículo. Ésta permite el uso de capítulos, secciones, y subsecciones. Además, genera autmáticamente una portada (de una página).
+La clase `udpreport.cls` es utilizada para generar documentos con mayor contenido que un artículo. Ésta permite el uso de capítulos, secciones, y subsecciones. Además, genera autmáticamente una portada (de una página).
 
 ```latex
 \documentclass{udpreport}
@@ -88,14 +89,14 @@ Acá otro capítulo.
 
 ## `udpmemo.cls`
 
-Esta clase genera memorandums de manera simple, permitiendo generar un encabezado oficial (incluyendo logos institucionales), así como agregar información de copias del memorandum.
+La clase `udpmemo.cls` genera memorandums de manera simple, permitiendo generar un encabezado oficial (incluyendo logos institucionales), así como agregar información de copias del memorandum.
 
 
 # Plantillas de evaluaciones
 
 ## `udpexam.cls`
 
-Esta clase permite crear examenes y solemnes usando el formato de la UDP. Extiende las mismas funcionalidades de [`exam.cls`](http://ctan.org/tex-archive/macros/latex/contrib/exam/)
+La clase `udpexam.cls` permite crear examenes y solemnes usando el formato de la UDP. Extiende las mismas funcionalidades de [`exam.cls`](http://ctan.org/tex-archive/macros/latex/contrib/exam/)
 
 ```latex
 \documentclass{udpexam}
@@ -146,8 +147,47 @@ La solución es obvia (por lo tanto se deja como ejercicio).
 
 ## `udpamc.cls`
 
-Esta clase permite crear examenes de opción múltiple, así como otros documentos de la misma índole (por ejemplo encuestas). Extiende las funcionalidades de [`auto multiple choice`](http://home.gna.org/auto-qcm/).
+La clase `udpamc.cls` permite crear examenes de opción múltiple, así como otros documentos de la misma índole (por ejemplo encuestas). Extiende las funcionalidades de [`auto multiple choice`](http://home.gna.org/auto-qcm/).
 
+# Plantillas para encuestas
+## `udpsruvey.cls`
+
+La clase `udpsurvey.cls` está construida de tal manera que permite la extensión y creación de nuevas encuestas. La encuesta funciona a través del uso de un formulario de opción múltiple (usando [`auto multiple choice`](http://home.gna.org/auto-qcm/index.en)). Para este fin, se pueden definir las preguntas de manera manual dentro del macro `\onecopy` o bien siguiendo implementación automática iterando una lista de preguntas en un macro (ver la implementación `\questions` en la sección [Definición de preguntas](#definicion)).
+
+En general, la iteración de elementos puede ser de cualquier elemento que pueda ser interpretado por `udpsurvey.cls` (definidos utilizando [`pgfkeys`](http://mirrors.ctan.org/graphics/pgf/base/doc/pgfmanual.pdf)).
+
+### <a id="definicion"></a> Definición de preguntas
+
+Para definir una nueva encuesta debe de definir un conjunto de elementos (similar a los contenidas en `questions.tex`), como
+
+```tex
+\def\questions{%
+  element,
+  {
+    sub element of list,
+    sub element of list,
+    ...
+    sub element of list
+  },
+  ...
+  element
+}
+```
+
+Los elementos pueden ser simples o un conjunto de ellos (denotados entre llaves: `{` y `}`).
+
+Los elementos que están implementados en `udpsurvey.cls` son:
+
+* Preguntas. Las preguntas se definen utilizando `question={<id>}{<text>}`. Note que las preguntas necesitan un identificador de `LaTeX` válido y único. Las preguntas deben tener un tipo definido por `type=<type>`. Por defecto las preguntas son de tipo opción múltiple (`oneitem`). Sin embargo, se puede cambiar el tipo agregando opciones que son procesadas dentro de un grupo.
+  
+  * Opción múltiple: definidas como `type=oneitem`.
+  * Abiertas: definidas como `type=openitem`.
+  * Opciones de las preguntas. Además del tipo se pueden definir opciones a cada una de las preguntas a través de `options={<option 1>, ..., <option N>}`. Por ejemplo, se puede establecer parámetros de las preguntas abiertas (usando las opciones de AMC): `options={lines=3, dots=true, lineheight=.3cm}`. 
+* Secciones. La encuesta puede definir encabezados (o secciones) con un estilo específico. Para ello, se definen como `section=<text>`.
+* Texto libre. Se puede agregar texto libre o instrucciones a la encuesta. Este tipo de elementos se define como `text=<text>`.
+* Encabezado de opciones. Se puede agregar un encabezado a la tabla (arriba de cualquier fila) para nombrar las opciones existentes. Este puede mostrar solo las opciones si se ejecuta sin opciones o bien agregar texto a la izquierda de éstas: `header[=<text>]` (`=<text>` es opcional).
+* Comandos. Se pueden ejecutar macros de LaTeX en la ejecución de a lista a través de `exec=<cmd>`.
+* Administración del encabezado automático. Se puede colocar o remover el encabezado automáticamente utilizando las opciones `auto header on` y `auto header off`, respectivamente.
 
 # Plantillas para cursos
 ## `udpsyllabus.cls`
