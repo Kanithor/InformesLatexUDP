@@ -47,10 +47,14 @@
   \@makeheader{\AMCtableLeft{#1\hfill}}{\headerChoices}%
 }
 
+% 'if' to control Shipout only when in table
+\newif\ifoutoftable
+\outoftabletrue
+
 % add the header to every next page
 \newcommand{\printHeader}{\makeheader}
 
-\AtBeginShipout{\printHeader}
+\AtBeginShipout{\ifoutoftable\else\printHeader\fi}
 
 % patch onecopy to discard extra pages produced by AtBeginShipout
 \let\wrongonecopy\onecopy
@@ -87,6 +91,7 @@
 
 % patch the table
 \renewenvironment{tablequestion}[1][]{%
+  \outoftablefalse
   \pgfkeys{table width, num columns, column width, column height, score, left text width, use options number, #1, set text width}
   \let\oldAMCbeginAnswer\AMCbeginAnswer%
   \def\AMCbeginAnswer{}%
@@ -102,6 +107,7 @@
 %  
   \iffirstheader\makeheader\fi%
 }{%
+  \outoftabletrue
   \let\AMCbeginAnswer\oldAMCbeginAnswer%
   \let\AMCendAnswer\oldAMCendAnswer%
   \let\AMCanswer\oldAMCanswer%
