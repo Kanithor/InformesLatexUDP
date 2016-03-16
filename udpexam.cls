@@ -67,7 +67,7 @@
   }{%
     Profesores: \@instructors%
   }%
-}{}{\thepage}
+}{}{\thepage/\numpages}
 
 % Name and section commands
 \RequirePackage{xparse}
