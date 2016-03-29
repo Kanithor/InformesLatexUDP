@@ -152,3 +152,6 @@ literate=%
     {ñ}{{\~{n}}}1
     {Ñ}{{\~{N}}}1
 }
+
+
+\RequirePackage[font=footnotesize,labelfont=bf, labelsep=period]{caption}
