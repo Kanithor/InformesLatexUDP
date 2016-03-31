@@ -5,9 +5,16 @@
 
 % Set the spanish system (ironically, the comments are in english, but.. who cares)
 
+\RequirePackage{ifluatex}
+\ifluatex
+  \RequirePackage{fontspec}
+\else
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[utf8]{inputenc}
+\fi
+
 % es-noquoting is used for no clash with tikz (see http://tex.stackexchange.com/a/48787/7561)
 % es-noshorthands is used to remove "a ordinal shorthand (see http://tex.stackexchange.com/a/203422/7561)
 \RequirePackage[spanish,es-lcroman,es-tabla,es-noquoting, es-noshorthands]{babel}
 \decimalpoint% changes the coma in the numbers to period
-\RequirePackage[utf8]{inputenc}
 \RequirePackage{csquotes}
