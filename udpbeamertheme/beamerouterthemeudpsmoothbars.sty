@@ -1,0 +1,144 @@
+% UDP Outher style based on Smoothbars (http://mirrors.ctan.org/macros/latex/contrib/beamer/base/themes/outer/beamerouterthemesmoothbars.sty)
+\ProvidesPackageRCS $Header: beamerouterthemeudpsmoothbars.sty,v 1.0 2016/04/07 adin$
+
+
+
+\newif\ifbeamer@sb@subsection
+
+\DeclareOptionBeamer{subsection}[true]{\csname beamer@sb@subsection#1\endcsname}
+\ExecuteOptionsBeamer{subsection=true}
+\ProcessOptionsBeamer
+
+
+
+\mode<presentation>
+
+\setbeamercolor{frametitle}{parent=palette primary}
+\setbeamercolor{subsection in head/foot}{parent=palette secondary}
+\setbeamercolor{section in head/foot}{parent=palette quaternary}
+
+
+\beamer@compresstrue
+
+\AtBeginDocument{
+  {
+    \usebeamerfont*{headline}
+    \colorlet{global.bg}{bg}
+    \usebeamercolor{subsection in head/foot}
+    \usebeamercolor{section in head/foot}
+    \usebeamercolor{frametitle}
+
+    \ifbeamer@sb@subsection
+      \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
+         color(0ex)=(global.bg);%
+         color(1ex)=(subsection in head/foot.bg);%
+         color(3.25ex)=(subsection in head/foot.bg);%
+         color(4.25ex)=(section in head/foot.bg);%
+         color(9.75ex)=(section in head/foot.bg)%
+       }
+       \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+         color(0ex)=(frametitle.bg);%
+         color(1ex)=(frametitle.bg);%
+         color(2ex)=(subsection in head/foot.bg)
+       }
+    \else
+      \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
+         color(0ex)=(global.bg);%
+         color(1ex)=(section in head/foot.bg);%
+         color(7ex)=(section in head/foot.bg)%
+       }
+     \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+         color(0ex)=(frametitle.bg);%
+         color(1ex)=(frametitle.bg);%
+         color(2ex)=(section in head/foot.bg)
+       }
+    \fi  
+
+    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
+      color(0ex)=(global.bg);%
+      color(1ex)=(frametitle.bg)
+    }
+  }
+}
+
+                                % Head
+\defbeamertemplate*{headline}{udpsmoothbars}
+{%
+  % dimensions to automatically set the size
+  \newdimen\framewidth
+  \newdimen\redwidth
+  \newdimen\frameheight
+  % check the options
+  \ifnum\insertframenumber>0\relax%
+    \redwidth=10pt%
+  \else%
+    \redwidth=0pt%
+  \fi%
+  \ifbeamer@sb@subsection%
+    \frameheight=4.375ex%
+  \else%
+    \frameheight=2.25ex%
+  \fi%
+  \framewidth=\paperwidth \advance\framewidth by -\redwidth%
+  % typeset the sections
+  \hbox{%
+  \begin{beamercolorbox}[wd=\redwidth,ht=2.25ex,dp=3.75ex,right]{square}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=\framewidth,ht=2.25ex,dp=3.75ex,right]{section in head/foot}
+    \ifnum\insertframenumber>0\relax
+      \insertnavigation{\framewidth}
+    \fi
+  \end{beamercolorbox}%
+  }%
+  % conditionally typeset the subsection
+  \ifbeamer@sb@subsection%
+    \hbox{%
+    \begin{beamercolorbox}[wd=\redwidth,ht=2.125ex,dp=1.125ex,right]{square}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[ht=2.125ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil%
+      ]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}\insertsubsectionhead
+    \end{beamercolorbox}%
+    }%
+  \fi
+  \vskip0pt%
+}%
+
+
+\RequirePackage[many]{tcolorbox}
+\defbeamertemplate*{frametitle}{udpsmoothbars}
+{%
+  \nointerlineskip%
+  \hbox{\hspace{-28.5pt}%
+    \usebeamercolor{square}%
+    \begin{tcolorbox}[
+      enhanced,
+      boxrule=10pt,
+      colframe=fg,
+      arc=0pt,
+      outer arc=0pt,
+      colback=frametitle.bg,
+      colupper=frametitle.fg,
+      width=\paperwidth,
+      toprule=0pt,
+      bottomrule=0pt,
+      rightrule=0pt,
+      left=5pt,
+      top=0pt,
+      bottom=0pt,
+    ]%
+    {\usebeamercolor{frametitle}\usebeamerfont*{frametitle}\strut\insertframetitle\strut}
+    \ifx\insertframesubtitle\@empty%
+      \strut\par%
+    \else%
+     \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\par}%
+    \fi
+  \end{tcolorbox}%
+  }
+  \nointerlineskip
+}
+  
+  
+\mode
+<all>
