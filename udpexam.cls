@@ -153,5 +153,8 @@ literate=%
     {Ñ}{{\~{N}}}1
 }
 
-
+% Caption
 \RequirePackage[font=footnotesize,labelfont=bf, labelsep=period]{caption}
+
+% Macro for conditional new pages on exams
+\newcommand{\examnewpage}{\ifprintanswers\else\newpage\fi}
